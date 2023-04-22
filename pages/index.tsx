@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { ReactPropTypes } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
 
 import Layout from "../components/Layout";
+import Canvas from "../components/Canvas";
 
 // TODO: url[]
 type DashboardProps = {
@@ -33,99 +35,8 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
       push("/api/auth/signin");
     },
   });
-  
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isMotionDetected, setIsMotionDetected] = useState(false);
-  
-  // const detectMotion = () => {
-  //   const video = videoRef.current;
-  //   const canvas = canvasRef.current;
-  //   const scaler = 50;
-  //   if (video && canvas) {
-  //     const ctx = canvas.getContext("2d");
-  //     const w = canvas.width;
-  //     const h = canvas.height;
-  //     ctx.drawImage(video, 0, 0, w, h);
-  //     var data = ctx.getImageData(0, 0, w, h).data;
-  
-  //     if (prevFrameData) {
-  //       let motionDetected = false;
-  //       for (let i = 0; i < data.length; i += 4 * scaler) {
-  //         const avg1 = (prevFrameData[i] + prevFrameData[i + 1] + prevFrameData[i + 2]) / 3;
-  //         const avg2 = (data[i] + data[i + 1] + data[i + 2]) / 3;
-  //         const diff = Math.abs(avg1 - avg2);
-  //         if (diff > 100) {
-  //           motionDetected = true;
-  //           break;
-  //         }
-  //       }
-  //       setIsMotionDetected(motionDetected);
-  //     }
-  //     prevFrameData = data;
-  //   }
-  //   window.requestAnimationFrame(detectMotion);
-  // };
-  
-  // useEffect(() => {
-  //   window.requestAnimationFrame(detectMotion);
-  // }, []);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const video = videoRef.current;
-  
-    if (!video) {
-      return;
-    }
-  
-    const ctx = canvas.getContext("2d")!;
-    let previousFrame: ImageData | null = null;
-  
-    setInterval(() => {
-      // if (video.paused || video.ended) {
-      //   return;
-      // }
-      // Draw the video on the canvas
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  
-      const currentFrame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  
-      if (previousFrame) {
-        let differentPixelsCount = 0;
-  
-        for (let i = 0; i < currentFrame.data.length; i += 4) {
-          const r1 = previousFrame.data[i];
-          const g1 = previousFrame.data[i + 1];
-          const b1 = previousFrame.data[i + 2];
-  
-          const r2 = currentFrame.data[i];
-          const g2 = currentFrame.data[i + 1];
-          const b2 = currentFrame.data[i + 2];
-  
-          if (Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) > 30) {
-            differentPixelsCount++;
-            currentFrame.data[i] = 0;
-            currentFrame.data[i + 1] = 255;
-            currentFrame.data[i + 2] = 0;
-          }
-        }
-  
-        if (differentPixelsCount > 100) {
-          setIsMotionDetected(true);
-          console.log("Motion detected!");
-        } else {
-          setIsMotionDetected(false);
-        }
-      }
-  
-      previousFrame = currentFrame;
-  
-      // Draw the current frame on the canvas
-      ctx.putImageData(currentFrame, 0, 0);
-    }, 500);
-  }, []);
-  
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   if (status === "loading") {
     return <h1>Loading...</h1>;
@@ -171,11 +82,12 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           Your browser does not support video html element.
         </video>
         Motion Map:
-        <canvas
+        <Canvas videoRef={videoRef} />
+        {/* <canvas
           id="motion"
           ref={canvasRef}
           style={{ width: 400, height: 200 }}
-        ></canvas>
+        ></canvas> */}
         Score:
         <span id="score"></span>
       </div>

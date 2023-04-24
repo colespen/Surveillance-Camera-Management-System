@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ReactPropTypes } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
@@ -27,6 +26,10 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMotion, setIsMotion] = useState<boolean>(false);
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
   const { push } = useRouter();
   // session is Session / undefined / null
   const { status, data: session } = useSession({
@@ -35,8 +38,6 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
       push("/api/auth/signin");
     },
   });
-
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   if (status === "loading") {
     return <h1>Loading...</h1>;
@@ -51,6 +52,9 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     );
   }
 
+  // console.log("isMotion: ", isMotion);
+  // console.log("isPlaying: ", isPlaying);
+
   return (
     <Layout>
       <div className="page">
@@ -59,36 +63,43 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         <video
           className="video"
           crossOrigin="anonymous"
-          ref={videoRef}
+          ref={videoRef1}
           controls
-          width="543"
-          height="305"
+          width="553px"
+          height="315px"
           autoPlay
           loop
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+          style={{
+            border: `5px solid ` + (isMotion ? "#ff0059" : "transparent"),
+          }}
         >
           <source type="video/mp4" src={data.url1} />
           Your browser does not support video html element.
         </video>
-        <video
+        {/* <video
           className="video"
           crossOrigin="anonymous"
+          ref={videoRef2}
           controls
-          width="543"
-          height="305"
+          width="553px"
+          height="315px"
           autoPlay
           loop
+          style={{ border: `5px solid transparent` }}
         >
           <source type="video/mp4" src={data.url2} />
           Your browser does not support video html element.
-        </video>
-        Motion Map:
-        <Canvas videoRef={videoRef} />
-        {/* <canvas
-          id="motion"
-          ref={canvasRef}
-          style={{ width: 400, height: 200 }}
-        ></canvas> */}
-        Score:
+        </video> */}
+        {/* Motion Map: */}
+        <Canvas 
+        videoRef={videoRef1} 
+        setIsMotion={setIsMotion} 
+        isPlaying={isPlaying}
+        />
+        {/* Score: */}
         <span id="score"></span>
       </div>
 

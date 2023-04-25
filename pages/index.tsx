@@ -58,11 +58,6 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     setIsMotion(bool);
   };
 
-  // const audioCtx = new AudioContext()
-  // audioCtx.createMediaElementSource(videoRef1.current)
-  //   useEffect(() => {
-  //   }, [])
-
   console.log("isMotion: ", isMotion)
 
   return (

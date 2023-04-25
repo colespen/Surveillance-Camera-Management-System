@@ -28,8 +28,8 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
-  // const [isAlert, setIsAlert] = useState<boolean>(false);
   const [isAudio, setIsAudio] = useState<boolean>(false);
+  const [isTripped, setIsTripped] = useState<boolean>(false);
   const videoRef1 = useRef<HTMLVideoElement>(null);
   // const videoRef2 = useRef<HTMLVideoElement>(null);
   const { push } = useRouter();
@@ -59,15 +59,15 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   ) => {
     setIsMotion(bool);
   };
-  // const handleSetIsAlert = (
-  //   bool: boolean | ((prevState: boolean) => boolean)
-  // ) => {
-  //   setIsAlert(bool);
-  // };
   const handleSetIsAudio = (
     bool: boolean | ((prevState: boolean) => boolean)
   ) => {
     setIsAudio(bool);
+  };
+  const handleSetIsTripped = (
+    bool: boolean | ((prevState: boolean) => boolean)
+  ) => {
+    setIsTripped(bool);
   };
 
   // console.log("isMotion: ", isMotion)
@@ -89,11 +89,12 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           loop
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onEnded={() => setIsPlaying(false)}
+          // onEnded={() => setIsPlaying(false)}
+          // onEnded keep state false on when loop
           onSeeking={() => setIsPlaying(true)}
           onSeeked={() => setIsPlaying(false)}
           style={{
-            border: `5px solid ` + (isMotion ? "#ff0059" : "transparent"),
+            border: `5px solid ` + (isMotion || isAudio ? "#ff0059" : "transparent"),
           }}
         >
           <source type="video/mp4" src={data.url1} />
@@ -104,13 +105,27 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           videoRef={videoRef1}
           setIsMotion={handleSetIsMotion}
           setIsAudio={handleSetIsAudio}
+          setIsTripped={handleSetIsTripped}
           isPlaying={isPlaying}
         />
         {/* Score: */}
         <span id="score"></span>
       </div>
       <div className="alerts">
-      {isAudio && <img src="./audio-alert.png" />}
+        {isAudio && (
+          <img
+            className="alert-ico"
+            src="./audio-alert.png"
+            alt="audio alert"
+          />
+        )}
+        {isMotion && (
+          <img
+            className="alert-ico"
+            src="./motion-alert.png"
+            alt="audio alert"
+          />
+        )}
       </div>
 
       <style jsx>{`

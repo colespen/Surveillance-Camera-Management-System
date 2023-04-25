@@ -1,26 +1,22 @@
 import { useCallback, useEffect, useRef } from "react";
-
-interface CanvasProps {
-  videoRef: React.MutableRefObject<HTMLVideoElement>;
-  setIsMotion: (bool: boolean | ((prevState: boolean) => boolean)) => void;
-  setIsAudio: (bool: boolean | ((prevState: boolean) => boolean)) => void;
-  isPlaying: boolean;
-}
+import { analysePixelDiff } from "../lib/utils";
+import { CanvasProps } from "../datatypes/proptypes";
 
 const Canvas = ({
   videoRef,
   setIsMotion,
   setIsAudio,
+  setIsTripped,
   isPlaying,
 }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const analyserNodeRef = useRef<AnalyserNode | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
+  const analyserNodeRef = useRef<AnalyserNode | null>(null);
   const isMotionSetRef = useRef<boolean>(false);
   const isAudioSetRef = useRef<boolean>(false);
 
-  const createAnalyserCtx = useCallback((video: HTMLVideoElement) => {
+  const createAudioAnalyserCtx = useCallback((video: HTMLVideoElement) => {
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
       // Create a separate audio element for audio analysis
@@ -57,9 +53,10 @@ const Canvas = ({
 
     // console.log("average: ", average);
     // Set audio flag based on the decibel value
-    if (average > 8) {
+    if (average > 10) {
       if (!isAudioSetRef.current) {
         setIsAudio(true);
+        setIsTripped(true);
         isAudioSetRef.current = true;
       }
     } else {
@@ -68,19 +65,15 @@ const Canvas = ({
         isAudioSetRef.current = false;
       }
     }
-    
     // Check audio flag every 100ms
     const analyzeDelay = setTimeout(analyzeAudio, 100);
     return () => clearTimeout(analyzeDelay);
   };
 
-  //////////////
-  //////////////
-
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    createAnalyserCtx(video);
+    createAudioAnalyserCtx(video);
   }, []);
 
   useEffect(() => {
@@ -113,39 +106,25 @@ const Canvas = ({
       diffPixelsCount = 0;
 
       if (previousFrame && isPlaying) {
-        for (let i = 0; i < currentFrame.data.length; i += 4) {
-          const r1 = previousFrame.data[i];
-          const g1 = previousFrame.data[i + 1];
-          const b1 = previousFrame.data[i + 2];
-
-          const r2 = currentFrame.data[i];
-          const g2 = currentFrame.data[i + 1];
-          const b2 = currentFrame.data[i + 2];
-          const pixelSum =
-            Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
-
-          if (pixelSum > threshold) {
-            diffPixelsCount++;
-            currentFrame.data[i] = 0;
-            currentFrame.data[i + 1] = 255;
-            currentFrame.data[i + 2] = 0;
-          }
-        }
+        diffPixelsCount = analysePixelDiff(
+          currentFrame,
+          previousFrame,
+          threshold,
+          diffPixelsCount
+        );
         diff = diffPixelsCount - tempDiffPixelsCount;
         tempDiffPixelsCount = diffPixelsCount;
         prevDiffPixelsCount = diff;
-
         // console.log("prevDiffPixelsCount: ", prevDiffPixelsCount)
-        if (prevDiffPixelsCount > 86) {
+        if (prevDiffPixelsCount > 90) {
           if (!isMotionSetRef.current) {
-            // console.log("setIsMotion(true)");
             setIsMotion(true);
+            setIsTripped(true);
             isMotionSetRef.current = true;
           }
         } else {
           ctx.drawImage(video, 0, 0, width, height);
           if (isMotionSetRef.current) {
-            // console.log("setIsMotion(false)");
             setIsMotion(false);
             isMotionSetRef.current = false;
           }
@@ -153,7 +132,7 @@ const Canvas = ({
       }
       previousFrame = currentFrame;
       ctx.putImageData(currentFrame, 0, 0);
-    }, 100);
+    }, 90);
 
     analyzeAudio();
     return () => clearInterval(drawInterval);

@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
-  const [isAlert, setIsAlert] = useState<boolean>(false);
+  // const [isAlert, setIsAlert] = useState<boolean>(false);
   const [isAudio, setIsAudio] = useState<boolean>(false);
   const videoRef1 = useRef<HTMLVideoElement>(null);
   // const videoRef2 = useRef<HTMLVideoElement>(null);
@@ -59,11 +59,11 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   ) => {
     setIsMotion(bool);
   };
-  const handleSetIsAlert = (
-    bool: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setIsAlert(bool);
-  };
+  // const handleSetIsAlert = (
+  //   bool: boolean | ((prevState: boolean) => boolean)
+  // ) => {
+  //   setIsAlert(bool);
+  // };
   const handleSetIsAudio = (
     bool: boolean | ((prevState: boolean) => boolean)
   ) => {
@@ -75,7 +75,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
 
   return (
     <Layout>
-      <div className="page">
+      <div className="video-container">
         <h1>Surveillance Management System</h1>
         {/* // TODO: .map() VIDEOS and associated urls */}
         <video
@@ -99,20 +99,6 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           <source type="video/mp4" src={data.url1} />
           Your browser does not support video html element.
         </video>
-        {/* <video
-          className="video"
-          crossOrigin="anonymous"
-          ref={videoRef2}
-          controls
-          width="553px"
-          height="315px"
-          autoPlay
-          loop
-          style={{ border: `5px solid transparent` }}
-        >
-          <source type="video/mp4" src={data.url2} />
-          Your browser does not support video html element.
-        </video> */}
         {/* Motion Map: */}
         <Canvas
           videoRef={videoRef1}
@@ -122,6 +108,9 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         />
         {/* Score: */}
         <span id="score"></span>
+      </div>
+      <div className="alerts">
+      {isAudio && <img src="./audio-alert.png" />}
       </div>
 
       <style jsx>{`

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
@@ -52,8 +52,18 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     );
   }
 
-  // console.log("isMotion: ", isMotion);
-  // console.log("isPlaying: ", isPlaying);
+  const handleSetIsMotion = (
+    bool: boolean | ((prevState: boolean) => boolean)
+  ) => {
+    setIsMotion(bool);
+  };
+
+  // const audioCtx = new AudioContext()
+  // audioCtx.createMediaElementSource(videoRef1.current)
+  //   useEffect(() => {
+  //   }, [])
+
+  console.log("isMotion: ", isMotion)
 
   return (
     <Layout>
@@ -72,6 +82,8 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPlaying(false)}
+          onSeeking={() => setIsPlaying(true)}
+          onSeeked={() => setIsPlaying(false)}
           style={{
             border: `5px solid ` + (isMotion ? "#ff0059" : "transparent"),
           }}
@@ -94,10 +106,11 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           Your browser does not support video html element.
         </video> */}
         {/* Motion Map: */}
-        <Canvas 
-        videoRef={videoRef1} 
-        setIsMotion={setIsMotion} 
-        isPlaying={isPlaying}
+        <Canvas
+          videoRef={videoRef1}
+          isMotion={isMotion}
+          setIsMotion={handleSetIsMotion}
+          isPlaying={isPlaying}
         />
         {/* Score: */}
         <span id="score"></span>

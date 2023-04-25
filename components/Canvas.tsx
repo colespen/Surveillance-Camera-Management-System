@@ -3,10 +3,16 @@ import { useEffect, useRef } from "react";
 interface CanvasProps {
   videoRef: React.MutableRefObject<HTMLVideoElement>;
   setIsMotion: React.Dispatch<React.SetStateAction<boolean>>;
+  isMotion: boolean;
   isPlaying: boolean;
 }
 
-const Canvas = ({ videoRef, setIsMotion, isPlaying }: CanvasProps) => {
+const Canvas = ({
+  videoRef,
+  isMotion,
+  setIsMotion,
+  isPlaying,
+}: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -22,19 +28,22 @@ const Canvas = ({ videoRef, setIsMotion, isPlaying }: CanvasProps) => {
     const width = canvas.width;
     const height = canvas.height;
     const threshold = 225;
+    let diff = 0;
     let diffPixelsCount = 0;
+    let prevDiffPixelsCount = 0;
+    let tempDiffPixelsCount = 0;
     let previousFrame: ImageData | null = null;
-    
-    console.log("isPlaying: ", isPlaying);
-    
+    // ctx.drawImage(video, 0, 0, width, height); // this will reset to orig. frame
+
     const drawInterval = setInterval(() => {
-      if (!isPlaying) return () => clearInterval(drawInterval);
-      diffPixelsCount = 0;
+      if (!isPlaying) {
+        return () => clearInterval(drawInterval);
+      }
       ctx.drawImage(video, 0, 0, width, height);
       const currentFrame = ctx.getImageData(0, 0, width, height);
+      diffPixelsCount = 0;
 
-
-      if (previousFrame) {
+      if (previousFrame && isPlaying) {
         for (let i = 0; i < currentFrame.data.length; i += 4) {
           const r1 = previousFrame.data[i];
           const g1 = previousFrame.data[i + 1];
@@ -53,19 +62,24 @@ const Canvas = ({ videoRef, setIsMotion, isPlaying }: CanvasProps) => {
             currentFrame.data[i + 2] = 0;
           }
         }
-        if (diffPixelsCount > 875) {
-          setIsMotion(true);
+        diff = diffPixelsCount - tempDiffPixelsCount;
+        tempDiffPixelsCount = diffPixelsCount;
+        prevDiffPixelsCount = diff;
+
+        // console.log("prevDiffPixelsCount: ", prevDiffPixelsCount);
+        if (prevDiffPixelsCount > 115) {
+          console.log("setIsMotion(true)")
+          if (!isMotion) setIsMotion(true);
+        } else {
+          console.log("setIsMotion(false)")
+          isMotion ? setIsMotion(false) : null;
         }
       }
-
-      console.log("diffPixelsCount: ", diffPixelsCount);
       previousFrame = currentFrame;
       ctx.putImageData(currentFrame, 0, 0);
-      // ctx.drawImage(video, 0, 0, width, height); // clears to orig vid frame
     }, 100);
-
     return () => clearInterval(drawInterval);
-  }, [isPlaying]);
+  }, [videoRef.current, isPlaying]);
 
   return (
     <canvas
@@ -105,7 +119,7 @@ export default Canvas;
 //     const threshold = 225;
 //     let diffPixelsCount = 0;
 //     let previousFrame: ImageData | null = null;
-    
+
 //     let drawInterval: NodeJS.Timeout | null = null;
 
 //     const handlePlay = () => {
@@ -114,7 +128,6 @@ export default Canvas;
 //         diffPixelsCount = 0;
 //         ctx.drawImage(video, 0, 0, width, height);
 //         const currentFrame = ctx.getImageData(0, 0, width, height);
-
 
 //         if (previousFrame) {
 //           for (let i = 0; i < currentFrame.data.length; i += 4) {

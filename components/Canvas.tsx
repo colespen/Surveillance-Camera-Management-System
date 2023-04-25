@@ -2,19 +2,21 @@ import { useEffect, useRef } from "react";
 
 interface CanvasProps {
   videoRef: React.MutableRefObject<HTMLVideoElement>;
-  setIsMotion: React.Dispatch<React.SetStateAction<boolean>>;
-  isMotion: boolean;
+  setIsMotion: (bool: boolean | ((prevState: boolean) => boolean)) => void;
+  setIsAudio: (bool: boolean | ((prevState: boolean) => boolean)) => void;
   isPlaying: boolean;
 }
 
 const Canvas = ({
   videoRef,
-  isMotion,
   setIsMotion,
+  setIsAudio,
   isPlaying,
 }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isMotionSetRef = useRef<boolean>(false);
+  // const audioContextRef = useRef<AudioContext | null>(null);
+  // const analyserNodeRef = useRef<AnalyserNode | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,9 +28,41 @@ const Canvas = ({
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
+    //////////////
+    // if (!audioContextRef.current) {
+    //   audioContextRef.current = new AudioContext();
+    //   analyserNodeRef.current = audioContextRef.current.createAnalyser();
+    //   const source = audioContextRef.current.createMediaElementSource(video);
+    //   source.connect(analyserNodeRef.current);
+    //   analyserNodeRef.current.connect(audioContextRef.current.destination);
+    // }
+    // const analyzeAudio = () => {
+    //   // Create an array to hold the frequency data
+    //   const bufferLength = analyserNodeRef.current.frequencyBinCount;
+    //   const dataArray = new Uint8Array(bufferLength);
+
+    //   // Get the frequency data from the analyser node
+    //   analyserNodeRef.current.getByteFrequencyData(dataArray);
+
+    //   // Calculate the average frequency in the sample
+    //   const average =
+    //     dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
+
+    //     // console.log("average: ", average)
+
+    //   // Set the motion flag based on the average frequency
+    //   setIsAudio(average > 12);
+
+    //   // Check the motion flag every 100ms
+    //   const analyzeDelay = setTimeout(analyzeAudio, 100);
+    //   // return () => clearTimeout(analyzeDelay)
+    // };
+    //////////////
+
     const width = canvas.width;
     const height = canvas.height;
-    const threshold = 225;
+    const threshold = 120;
+
     let diff = 0;
     let diffPixelsCount = 0;
     let prevDiffPixelsCount = 0;
@@ -67,13 +101,16 @@ const Canvas = ({
         tempDiffPixelsCount = diffPixelsCount;
         prevDiffPixelsCount = diff;
 
-        if (prevDiffPixelsCount > 115) {
+        console.log("prevDiffPixelsCount: ", prevDiffPixelsCount)
+
+        if (prevDiffPixelsCount > 86) {
           if (!isMotionSetRef.current) {
             console.log("setIsMotion(true)");
             setIsMotion(true);
             isMotionSetRef.current = true;
           }
         } else {
+          ctx.drawImage(video, 0, 0, width, height)
           if (isMotionSetRef.current) {
             console.log("setIsMotion(false)");
             setIsMotion(false);
@@ -84,6 +121,8 @@ const Canvas = ({
       previousFrame = currentFrame;
       ctx.putImageData(currentFrame, 0, 0);
     }, 100);
+
+    // analyzeAudio();
     return () => clearInterval(drawInterval);
   }, [videoRef.current, isPlaying]);
 

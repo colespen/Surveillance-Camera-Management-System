@@ -28,10 +28,12 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
+  const [isAlert, setIsAlert] = useState<boolean>(false);
+  const [isAudio, setIsAudio] = useState<boolean>(false);
   const videoRef1 = useRef<HTMLVideoElement>(null);
-  const videoRef2 = useRef<HTMLVideoElement>(null);
+  // const videoRef2 = useRef<HTMLVideoElement>(null);
   const { push } = useRouter();
-  // session is Session / undefined / null
+  // session: Session / undefined / null
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated: () => {
@@ -57,8 +59,19 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   ) => {
     setIsMotion(bool);
   };
+  const handleSetIsAlert = (
+    bool: boolean | ((prevState: boolean) => boolean)
+  ) => {
+    setIsAlert(bool);
+  };
+  const handleSetIsAudio = (
+    bool: boolean | ((prevState: boolean) => boolean)
+  ) => {
+    setIsAudio(bool);
+  };
 
-  console.log("isMotion: ", isMotion)
+  // console.log("isMotion: ", isMotion)
+  // console.log("isAudio: ", isAudio)
 
   return (
     <Layout>
@@ -103,8 +116,8 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Motion Map: */}
         <Canvas
           videoRef={videoRef1}
-          isMotion={isMotion}
           setIsMotion={handleSetIsMotion}
+          setIsAudio={handleSetIsAudio}
           isPlaying={isPlaying}
         />
         {/* Score: */}

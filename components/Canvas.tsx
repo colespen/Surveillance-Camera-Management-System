@@ -20,7 +20,6 @@ const Canvas = ({
   const createAudioAnalyserCtx = useCallback((video: HTMLVideoElement) => {
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
-      // audioContextRef.current.resume();
       // Create a separate audio element for audio analysis
       audioElementRef.current = new Audio();
       audioElementRef.current.crossOrigin = "anonymous";
@@ -44,7 +43,7 @@ const Canvas = ({
     if (!isPlaying) {
       return () => clearTimeout(analyzeDelay);
     }
-    // audioContextRef.current.resume();
+    audioContextRef.current.resume();
 
     const bufferLength = analyserNodeRef.current.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);

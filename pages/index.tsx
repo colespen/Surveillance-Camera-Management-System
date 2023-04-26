@@ -1,26 +1,16 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
 import { DashboardProps } from "../datatypes/proptypes";
+import { videoData } from "../mock-data/videoData";
 
 import Layout from "../components/Layout";
 import VideoItemList from "../components/VideoItemList";
 
 export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
-  const videoData: VideoData[] = [
-    { id: 1, url: "https://dunz8t440z7z8.cloudfront.net/loading-bay-1.mp4" },
-    { id: 1, url: "https://dunz8t440z7z8.cloudfront.net/loading-bay-2.mp4" },
-    { id: 1, url: "https://dunz8t440z7z8.cloudfront.net/loading-bay-3.mp4" },
-    {
-      id: 2,
-      url: "https://dunz8t440z7z8.cloudfront.net/rear-entrance-no-mic.mp4",
-    },
-    {
-      id: 3,
-      url: "https://dunz8t440z7z8.cloudfront.net/rear-entrance-overhead.mp4",
-    },
-  ];
+  console.log("videoData: ", videoData);
+
   return {
     props: { source: videoData },
   };

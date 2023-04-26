@@ -1,23 +1,7 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import Canvas from "./Canvas";
 
-const VideoItemList = ({
-  // setIsPlaying,
-  // videoRef,
-  // isMotion,
-  // isAudio,
-  source,
-}) => {
-  // const videoRefs = useRef<HTMLVideoElement[]>([]);
-  // videoRefs.current = [];
-
-  // const addToRefs = (ref: any) => {
-  //   if (ref && !videoRefs.current.includes(ref)) {
-  //     videoRefs.current.push(ref);
-  //   }
-  //   // console.log(videoRefs.current);
-  // };
-
+const VideoItemList = ({ source }) => {
   const VideoItem = ({ video }) => {
     const [isMotion, setIsMotion] = useState<boolean>(false);
     const [isAudio, setIsAudio] = useState<boolean>(false);
@@ -95,45 +79,14 @@ const VideoItemList = ({
   };
 
   return (
-    <>
-      <div
-        className="videos-container"
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        {source.map((video: VideoData, i: number) => {
-          return <VideoItem key={video.id + i} video={video} />;
-        })}
-        {/* {console.log("videoRefs: ", videoRefs.current)}
-        {videoRefs.current.map((ref, i) => {
-          console.log(ref);
-          return (
-            // <Canvas
-            //   key={i}
-            //   videoRef={ref}
-            //   setIsMotion={handleSetIsMotion}
-            //   setIsAudio={handleSetIsAudio}
-            //   setIsTripped={handleSetIsTripped}
-            //   isPlaying={isPlaying}
-            //   // id={video.id}
-            // />
-          );
-        })} */}
-      </div>
-      {/* <div className="alerts">
-        <img
-          className="alert-ico"
-          src="./audio-alert.png"
-          alt="audio alert"
-          // style={{ visibility: isAudio ? "visible" : "hidden" }}
-        />
-        <img
-          className="alert-ico"
-          src="./motion-alert.png"
-          alt="audio alert"
-          // style={{ visibility: isMotion ? "visible" : "hidden" }}
-        />
-      </div> */}
-    </>
+    <div
+      className="videos-container"
+      style={{ display: "flex", flexDirection: "column" }}
+    >
+      {source.map((video: VideoData, i: number) => {
+        return <VideoItem key={video.id + i} video={video} />;
+      })}
+    </div>
   );
 };
 

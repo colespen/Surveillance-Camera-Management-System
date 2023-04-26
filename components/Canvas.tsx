@@ -49,11 +49,9 @@ const Canvas = ({
     const bufferLength = analyserNodeRef.current.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
     analyserNodeRef.current.getByteFrequencyData(dataArray);
-
     const average =
       dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
 
-    // console.log("average: ", average);
     // Set audio flag based on the decibel value
     if (average > 9) {
       if (!isAudioSetRef.current) {
@@ -120,7 +118,7 @@ const Canvas = ({
         // console.log("prevDiffPixelsCount: ", prevDiffPixelsCount)
         if (prevDiffPixelsCount > 100) {
           if (!isMotionSetRef.current) {
-            console.log("setIsMotion(true)");
+            // console.log("setIsMotion(true)");
             setIsMotion(true);
             setIsTripped(true);
             isMotionSetRef.current = true;
@@ -128,7 +126,7 @@ const Canvas = ({
         } else {
           ctx.drawImage(video, 0, 0, width, height);
           if (isMotionSetRef.current) {
-            console.log("setIsMotion(false)");
+            // console.log("setIsMotion(false)");
             setIsMotion(false);
             isMotionSetRef.current = false;
           }

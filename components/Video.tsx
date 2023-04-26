@@ -1,19 +1,19 @@
 const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url }) => {
+
   return (
     <>
       <video
-        // key={id}
         className="video-element"
         crossOrigin="anonymous"
         ref={videoRef}
-        controls
         width="553px"
         height="315px"
+        controls
         autoPlay
         loop
         onPlay={() => handleIsPlaying(true)}
-        onPause={() => handleIsPlaying(false)}
-        // onEnded={handleIsPlayFalse}
+        onPause={() => handleIsPlaying(false)}        
+        // onEnded={() => handleIsPlaying(false)}
         // onEnded keeps state false on loop
         onSeeking={() => handleIsPlaying(true)}
         onSeeked={() => handleIsPlaying(false)}

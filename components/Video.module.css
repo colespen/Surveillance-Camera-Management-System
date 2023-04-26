@@ -1,0 +1,29 @@
+.videoHeader {
+  display: flex;
+  align-items: center;
+}
+
+.cameraHeader {
+  margin: 5px 0px 4px 0px;
+}
+
+.videosContianer {
+  display: flex;
+  flex-direction: column;
+}
+
+.videoContainer {
+  display: flex;
+}
+
+.alerts {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+}
+
+.videoSelect {
+  font-size: 15px;
+  margin-left: 15px;
+  height: 100%;
+}

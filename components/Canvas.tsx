@@ -3,7 +3,6 @@ import { analysePixelDiff } from "../lib/utils";
 import { CanvasProps } from "../datatypes/proptypes";
 
 const Canvas = ({
-  // id,
   videoRef,
   setIsMotion,
   setIsAudio,
@@ -20,6 +19,7 @@ const Canvas = ({
   const createAudioAnalyserCtx = useCallback((video: HTMLVideoElement) => {
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
+      // audioContextRef.current.resume();
       // Create a separate audio element for audio analysis
       audioElementRef.current = new Audio();
       audioElementRef.current.crossOrigin = "anonymous";
@@ -75,6 +75,9 @@ const Canvas = ({
     createAudioAnalyserCtx(video);
   }, []);
 
+  // console.log(isPlaying)
+
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -94,6 +97,7 @@ const Canvas = ({
     let prevDiffPixelsCount = 0;
     let tempDiffPixelsCount = 0;
     let previousFrame: ImageData | null = null;
+
     // ctx.drawImage(video, 0, 0, width, height); // this will reset to orig. frame
 
     const drawInterval = setInterval(() => {

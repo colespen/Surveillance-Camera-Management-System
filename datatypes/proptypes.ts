@@ -1,9 +1,5 @@
 export interface CanvasProps {
-  // videoRef: HTMLVideoElement;
   videoRef: React.MutableRefObject<HTMLVideoElement>;
-  // id: number;
-  // videoRef: HTMLVideoElement[];
-  // setIsMotion: (bool: boolean | ((prevState: boolean) => boolean)) => void;
   setIsMotion: (bool: boolean) => void;
   setIsAudio: (bool: boolean) => void;
   setIsTripped: (bool: boolean) => void;
@@ -12,4 +8,13 @@ export interface CanvasProps {
 
 export interface DashboardProps {
   source: VideoData[];
+}
+
+export interface VideoItemListProps {
+  source: VideoData[];
+}
+
+export interface VideoItemProps {
+  id: number;
+  videos: VideoData[];
 }

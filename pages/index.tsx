@@ -9,8 +9,6 @@ import Layout from "../components/Layout";
 import VideoItemList from "../components/VideoItemList";
 
 export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
-  console.log("videoData: ", videoData);
-
   return {
     props: { source: videoData },
   };

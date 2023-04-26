@@ -24,6 +24,18 @@ const userData = [
 // TODO: TS Interface
 const cameraData = [
   {
+    name: 'loading bay',
+    location: "Front St. loading Bay"
+  },
+  {
+    name: 'rear entrance',
+    location: "2357 Main St."
+  },
+  {
+    name: 'rear entrance overhead',
+    location: "2357 Main St."
+  },
+  {
     name: 'corridor 1',
     location: "NE Corridor"
   },
@@ -32,18 +44,34 @@ const cameraData = [
     location: "NW Corridor"
   },
   {
-    name: 'loading bay',
-    location: "Front St. loading Bay"
-  },
-  {
     name: 'front entrance',
     location: "2357 Main St."
   },
 ];
 const videoData = [
   {
+    cameraId: 1,
+    url: 'https://dunz8t440z7z8.cloudfront.net/loading-bay-1.mp4',
+    duration: '00:00:50',
+  },
+  {
+    cameraId: 1,
+    url: 'https://dunz8t440z7z8.cloudfront.net/loading-bay-2.mp4',
+    duration: '00:00:50',
+  },
+  {
+    cameraId: 1,
+    url: 'https://dunz8t440z7z8.cloudfront.net/loading-bay-3.mp4',
+    duration: '00:00:50',
+  },
+  {
+    cameraId: 2,
+    url: 'https://dunz8t440z7z8.cloudfront.net/rear-entrance-no-mic.mp4',
+    duration: '00:00:50',
+  },
+  {
     cameraId: 3,
-    url: 'https://surveillance-management-system.s3.us-east-2.amazonaws.com/loading-bay-1.mov',
+    url: 'https://dunz8t440z7z8.cloudfront.net/rear-entrance-overhead.mp4',
     duration: '00:00:50',
   },
 ];

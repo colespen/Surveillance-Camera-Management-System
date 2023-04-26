@@ -3,6 +3,7 @@ import { analysePixelDiff } from "../lib/utils";
 import { CanvasProps } from "../datatypes/proptypes";
 
 const Canvas = ({
+  // id,
   videoRef,
   setIsMotion,
   setIsAudio,
@@ -19,6 +20,7 @@ const Canvas = ({
   const createAudioAnalyserCtx = useCallback((video: HTMLVideoElement) => {
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
+      // audioContextRef.current.resume();
       // Create a separate audio element for audio analysis
       audioElementRef.current = new Audio();
       audioElementRef.current.crossOrigin = "anonymous";
@@ -53,7 +55,7 @@ const Canvas = ({
 
     // console.log("average: ", average);
     // Set audio flag based on the decibel value
-    if (average > 10) {
+    if (average > 9) {
       if (!isAudioSetRef.current) {
         setIsAudio(true);
         setIsTripped(true);
@@ -66,7 +68,7 @@ const Canvas = ({
       }
     }
     // Check audio flag every 100ms
-    const analyzeDelay = setTimeout(analyzeAudio, 100);
+    const analyzeDelay = setTimeout(analyzeAudio, 200);
     return () => clearTimeout(analyzeDelay);
   };
 
@@ -116,8 +118,9 @@ const Canvas = ({
         tempDiffPixelsCount = diffPixelsCount;
         prevDiffPixelsCount = diff;
         // console.log("prevDiffPixelsCount: ", prevDiffPixelsCount)
-        if (prevDiffPixelsCount > 90) {
+        if (prevDiffPixelsCount > 100) {
           if (!isMotionSetRef.current) {
+            console.log("setIsMotion(true)");
             setIsMotion(true);
             setIsTripped(true);
             isMotionSetRef.current = true;
@@ -125,6 +128,7 @@ const Canvas = ({
         } else {
           ctx.drawImage(video, 0, 0, width, height);
           if (isMotionSetRef.current) {
+            console.log("setIsMotion(false)");
             setIsMotion(false);
             isMotionSetRef.current = false;
           }

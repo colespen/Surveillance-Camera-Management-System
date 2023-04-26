@@ -2,36 +2,35 @@ import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
+import { DashboardProps } from "../datatypes/proptypes";
 
 import Layout from "../components/Layout";
-import Canvas from "../components/Canvas";
-
-// TODO: url[]
-type DashboardProps = {
-  data: {
-    url1: string;
-    url2: string;
-  };
-};
+import VideoItemList from "../components/VideoItemList";
+// import Canvas from "../components/Canvas";
 
 export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
-  // TODO: url[]
-  const videoFeeds = {
-    url1: "https://dunz8t440z7z8.cloudfront.net/loading-bay-1.mp4",
-    url2: "https://dunz8t440z7z8.cloudfront.net/loading-bay-2.mp4",
-  };
+  
+  const videoData: VideoData[] = [
+    { id: 1, url: "https://dunz8t440z7z8.cloudfront.net/loading-bay-1.mp4" },
+    { id: 1, url: "https://dunz8t440z7z8.cloudfront.net/loading-bay-2.mp4" },
+    { id: 1, url: "https://dunz8t440z7z8.cloudfront.net/loading-bay-3.mp4" },
+    { id: 2, url: "https://dunz8t440z7z8.cloudfront.net/rear-entrance-no-mic.mp4" },
+    { id: 3, url: "https://dunz8t440z7z8.cloudfront.net/rear-entrance-overhead.mp4" },
+  ];
   return {
-    props: { data: videoFeeds },
+    props: { source: videoData },
   };
 };
 
-const Dashboard: React.FC<DashboardProps> = ({ data }) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMotion, setIsMotion] = useState<boolean>(false);
-  const [isAudio, setIsAudio] = useState<boolean>(false);
-  const [isTripped, setIsTripped] = useState<boolean>(false);
-  const videoRef1 = useRef<HTMLVideoElement>(null);
-  // const videoRef2 = useRef<HTMLVideoElement>(null);
+const Dashboard: React.FC<DashboardProps> = ({ source }) => {
+  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  // const [isMotion, setIsMotion] = useState<boolean>(false);
+  // const [isAudio, setIsAudio] = useState<boolean>(false);
+  // const [isTripped, setIsTripped] = useState<boolean>(false);
+  // const videoRef = useRef<HTMLVideoElement>(null);
+
+  // console.log(source);
+
   const { push } = useRouter();
   // session: Session / undefined / null
   const { status, data: session } = useSession({
@@ -54,34 +53,41 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     );
   }
 
-  const handleSetIsMotion = (
-    bool: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setIsMotion(bool);
-  };
-  const handleSetIsAudio = (
-    bool: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setIsAudio(bool);
-  };
-  const handleSetIsTripped = (
-    bool: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setIsTripped(bool);
-  };
+  // const handleSetIsMotion = (
+  //   bool: boolean | ((prevState: boolean) => boolean)
+  // ) => {
+  //   setIsMotion(bool);
+  // };
+  // const handleSetIsAudio = (
+  //   bool: boolean | ((prevState: boolean) => boolean)
+  // ) => {
+  //   setIsAudio(bool);
+  // };
+  // const handleSetIsTripped = (
+  //   bool: boolean | ((prevState: boolean) => boolean)
+  // ) => {
+  //   setIsTripped(bool);
+  // };
 
   // console.log("isMotion: ", isMotion)
   // console.log("isAudio: ", isAudio)
 
   return (
     <Layout>
-      <div className="video-container">
         <h1>Surveillance Management System</h1>
+      {/* <div className="video-container"> */}
         {/* // TODO: .map() VIDEOS and associated urls */}
-        <video
+        <VideoItemList
+          // setIsPlaying={setIsPlaying}
+          // videoRef={videoRef}
+          // isMotion={isMotion}
+          // isAudio={isAudio}
+          source={source}
+        />
+        {/* <video
           className="video"
           crossOrigin="anonymous"
-          ref={videoRef1}
+          ref={videoRef}
           controls
           width="553px"
           height="315px"
@@ -94,54 +100,37 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           onSeeking={() => setIsPlaying(true)}
           onSeeked={() => setIsPlaying(false)}
           style={{
-            border: `5px solid ` + (isMotion || isAudio ? "#ff0059" : "transparent"),
+            border:
+              `5px solid ` + (isMotion || isAudio ? "#ff0059" : "transparent"),
           }}
         >
-          <source type="video/mp4" src={data.url1} />
+          <source type="video/mp4" src={source[0].url} />
           Your browser does not support video html element.
-        </video>
-        {/* Motion Map: */}
-        <Canvas
-          videoRef={videoRef1}
+        </video> */}
+        {/* <Canvas
+          videoRef={videoRef}
           setIsMotion={handleSetIsMotion}
           setIsAudio={handleSetIsAudio}
           setIsTripped={handleSetIsTripped}
           isPlaying={isPlaying}
-        />
-        {/* Score: */}
+        /> */}
+        {/* Motion Map */}
         <span id="score"></span>
-      </div>
-      <div className="alerts">
-        {isAudio && (
-          <img
-            className="alert-ico"
-            src="./audio-alert.png"
-            alt="audio alert"
-          />
-        )}
-        {isMotion && (
-          <img
-            className="alert-ico"
-            src="./motion-alert.png"
-            alt="audio alert"
-          />
-        )}
-      </div>
-
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+      {/* </div> */}
+      {/* <div className="alerts">
+        <img
+          className="alert-ico"
+          src="./audio-alert.png"
+          alt="audio alert"
+          style={{ visibility: isAudio ? "visible" : "hidden" }}
+        />
+        <img
+          className="alert-ico"
+          src="./motion-alert.png"
+          alt="audio alert"
+          style={{ visibility: isMotion ? "visible" : "hidden" }}
+        />
+      </div> */}
     </Layout>
   );
 };

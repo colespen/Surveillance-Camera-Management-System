@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -19,14 +15,15 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "prisma/seed.js", "lib/auth/credentialsProvider.js", "components/MotionDetection.jsx"  ],
+    "**/*.tsx",
+    "prisma/seed.js",
+    "lib/auth/credentialsProvider.js",
+    "components/MotionDetection.jsx"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

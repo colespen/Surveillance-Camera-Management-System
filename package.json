@@ -11,9 +11,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.6.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@next-auth/prisma-adapter": "1.0.6",
     "@prisma/client": "4.13.0",
     "bcrypt": "^5.1.0",
+    "framer-motion": "^10.12.4",
     "next": "13.3.0",
     "next-auth": "4.22.1",
     "next-superjson": "0.0.4",

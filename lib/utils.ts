@@ -4,7 +4,7 @@ const analysePixelDiff = (
   threshold: number,
   diffPixelsCount: number
 ) => {
-  for (let i = 0; i < currentFrame.data.length; i += 4) {
+  for (let i = 0; i < currentFrame.data.length; i += 8) {
     const r1 = previousFrame.data[i];
     const g1 = previousFrame.data[i + 1];
     const b1 = previousFrame.data[i + 2];
@@ -19,8 +19,9 @@ const analysePixelDiff = (
       currentFrame.data[i] = 0;
       currentFrame.data[i + 1] = 255;
       currentFrame.data[i + 2] = 0;
-    }
+    } 
   }
+  // console.log("currentFrame: ", currentFrame)
   return diffPixelsCount;
 };
 

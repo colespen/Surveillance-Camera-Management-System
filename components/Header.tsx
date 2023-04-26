@@ -121,9 +121,9 @@ const Header: React.FC = () => {
             Feed
           </a>
         </Link>
-        <Link href="/drafts" legacyBehavior>
-          <a data-active={isActive("/drafts")}>History</a>
-        </Link>
+        {/* <Link href="/" legacyBehavior> */}
+          <a >History</a>
+        {/* </Link> */}
         <style jsx>{`
           .bold {
             font-weight: bold;

@@ -44,7 +44,7 @@ const Canvas = ({
     if (!isPlaying) {
       return () => clearTimeout(analyzeDelay);
     }
-    audioContextRef.current.resume();
+    // audioContextRef.current.resume();
 
     const bufferLength = analyserNodeRef.current.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -116,7 +116,7 @@ const Canvas = ({
         tempDiffPixelsCount = diffPixelsCount;
         prevDiffPixelsCount = diff;
         // console.log("prevDiffPixelsCount: ", prevDiffPixelsCount)
-        if (prevDiffPixelsCount > 100) {
+        if (prevDiffPixelsCount > 95) {
           if (!isMotionSetRef.current) {
             // console.log("setIsMotion(true)");
             setIsMotion(true);

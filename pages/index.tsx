@@ -18,7 +18,7 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 
 const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   const [isTripped, setIsTripped] = useState<boolean>(false);
-  const { push } = useRouter();
+  // const { push } = useRouter();
   // session: Session / undefined / null
   // const { status, data: session } = useSession({
   //   required: true,

@@ -1,3 +1,6 @@
+/** 
+* @description: analysePixelDiff function compares two frames and return number of different pixels between each 
+*/
 const analysePixelDiff = (
   currentFrame: ImageData,
   previousFrame: ImageData,
@@ -19,7 +22,7 @@ const analysePixelDiff = (
       currentFrame.data[i] = 0;
       currentFrame.data[i + 1] = 255;
       currentFrame.data[i + 2] = 0;
-    } 
+    }
   }
   return diffPixelsCount;
 };

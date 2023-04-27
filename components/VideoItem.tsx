@@ -50,7 +50,11 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
   return (
     <>
       <div className={styles.videoHeader}>
-        <h3 className={styles.cameraHeader}>{camNum+1}{". "}{camera}</h3>
+        <h3 className={styles.cameraHeader}>
+          {camNum + 1}
+          {". "}
+          {camera}
+        </h3>
 
         <select
           className={styles.videoSelect}
@@ -74,15 +78,17 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
           url={url}
           isOffline={isOffline}
         />
-        {<Canvas
-          videoRef={videoRef}
-          setIsMotion={handleSetIsMotion}
-          setIsAudio={handleSetIsAudio}
-          setIsTripped={handleSetIsTripped}
-          isPlaying={isPlaying}
-          isOffline={isOffline}
-          // id={video.id}
-        />}
+        {
+          <Canvas
+            videoRef={videoRef}
+            setIsMotion={handleSetIsMotion}
+            setIsAudio={handleSetIsAudio}
+            setIsTripped={handleSetIsTripped}
+            isPlaying={isPlaying}
+            isOffline={isOffline}
+            // id={video.id}
+          />
+        }
         <div className={styles.alerts}>
           <img
             className={styles.alertIcon}

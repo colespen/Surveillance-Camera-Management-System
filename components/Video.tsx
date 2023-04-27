@@ -1,7 +1,13 @@
 import styles from "./Video.module.css";
 
-const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url, isOffline }) => {
-
+const Video = ({
+  videoRef,
+  handleIsPlaying,
+  isMotion,
+  isAudio,
+  url,
+  isOffline,
+}) => {
   return (
     <>
       <video
@@ -15,7 +21,7 @@ const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url, isOffline })
         loop
         poster={"./video-placeholder.png"}
         onPlay={() => handleIsPlaying(true)}
-        onPause={() => handleIsPlaying(false)}        
+        onPause={() => handleIsPlaying(false)}
         // onEnded={() => handleIsPlaying(false)}
         // onEnded keeps state false on loop
         onSeeking={() => handleIsPlaying(true)}

@@ -29,6 +29,9 @@ yarn dev
 pnpm dev
 ```
 
+Set the environment variables as specified in .env.example
+
+
 Finally, open [http://localhost:3000](http://localhost:3000) with your browser!
 
 

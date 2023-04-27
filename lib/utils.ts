@@ -21,7 +21,6 @@ const analysePixelDiff = (
       currentFrame.data[i + 2] = 0;
     } 
   }
-  // console.log("currentFrame: ", currentFrame)
   return diffPixelsCount;
 };
 

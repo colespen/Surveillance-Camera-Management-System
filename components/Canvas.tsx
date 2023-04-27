@@ -77,8 +77,6 @@ const Canvas = ({
     createAudioAnalyserCtx(video);
   }, []);
 
-  // console.log(isPlaying)
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -91,8 +89,6 @@ const Canvas = ({
 
     const width = canvas.width;
     const height = canvas.height;
-    // const width = canvas.clientWidth;
-    // const height = canvas.clientHeight;
     const threshold = 120;
 
     let diff = 0;
@@ -121,10 +117,9 @@ const Canvas = ({
         diff = diffPixelsCount - tempDiffPixelsCount;
         tempDiffPixelsCount = diffPixelsCount;
         prevDiffPixelsCount = diff;
-        // console.log("prevDiffPixelsCount: ", prevDiffPixelsCount)
+
         if (prevDiffPixelsCount > 95) {
           if (!isMotionSetRef.current) {
-            // console.log("setIsMotion(true)");
             setIsMotion(true);
             setIsTripped(true);
             isMotionSetRef.current = true;
@@ -132,7 +127,6 @@ const Canvas = ({
         } else {
           ctx.drawImage(video, 0, 0, width, height);
           if (isMotionSetRef.current) {
-            // console.log("setIsMotion(false)");
             setIsMotion(false);
             isMotionSetRef.current = false;
           }
@@ -150,11 +144,8 @@ const Canvas = ({
     <canvas
       className={styles.canvasElement}
       ref={canvasRef}
-      // width="50%"
-      // height="100%"
       width="543px"
       height="305px"
-      style={{ border: `5px solid transparent` }}
     />
   );
 };

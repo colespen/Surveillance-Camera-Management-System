@@ -44,33 +44,16 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
     setIsTripped(bool);
   };
 
-  console.log(isTripped);
-  console.log("./" + (isTripped ? "red" : "green") + "-circle");
-
   return (
     <Layout>
       <div className={styles.headerMain}>
         <div className={styles.headerInner}>
-        <h1>Surveillance Management System</h1>
-        <img
-        className={styles.mainIndicator}
-          src={"./" + (isTripped ? "red" : "green") + "-circle.png"}
-          alt="cam indicator1"
-        ></img>
-        </div>
-        <div className={styles.camIndicators}>
-          <span>
-            1.
-            <img src={" circle"} alt="cam indicator1"></img>
-          </span>
-          <span>
-            2.
-            <img src={" circle"} alt="cam indicator2"></img>
-          </span>
-          <span>
-            3.
-            <img src={" circle"} alt="cam indicator3"></img>
-          </span>
+          <h1>Surveillance Management System</h1>
+          <img
+            className={styles.mainIndicator}
+            src={"./" + (isTripped ? "red" : "green") + "-circle.png"}
+            alt="cam indicator1"
+          ></img>
         </div>
       </div>
       <VideoItemList source={source} setIsTripped={handleSetIsTripped} />

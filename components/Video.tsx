@@ -1,6 +1,6 @@
 import styles from "./Video.module.css";
 
-const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url }) => {
+const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url, isOffline }) => {
 
   return (
     <>
@@ -8,13 +8,12 @@ const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url }) => {
         className={styles.videoElement}
         crossOrigin="anonymous"
         ref={videoRef}
-        // width="50%"
-        // height="auto"
         // width="553px"
         // height="315px"
-        controls
         autoPlay
+        controls
         loop
+        poster={"./video-placeholder.png"}
         onPlay={() => handleIsPlaying(true)}
         onPause={() => handleIsPlaying(false)}        
         // onEnded={() => handleIsPlaying(false)}

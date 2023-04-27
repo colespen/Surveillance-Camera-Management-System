@@ -72,15 +72,17 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
           isMotion={isMotion}
           isAudio={isAudio}
           url={url}
+          isOffline={isOffline}
         />
-        <Canvas
+        {<Canvas
           videoRef={videoRef}
           setIsMotion={handleSetIsMotion}
           setIsAudio={handleSetIsAudio}
           setIsTripped={handleSetIsTripped}
           isPlaying={isPlaying}
+          isOffline={isOffline}
           // id={video.id}
-        />
+        />}
         <div className={styles.alerts}>
           <img
             className="alert-ico"

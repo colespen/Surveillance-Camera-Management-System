@@ -23,7 +23,7 @@
     "prisma/seed.js",
     "lib/auth/credentialsProvider.js",
     "components/MotionDetection.jsx"
-  ],
+, "jest.config.js"  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

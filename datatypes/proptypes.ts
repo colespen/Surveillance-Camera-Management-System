@@ -6,7 +6,6 @@ export interface CanvasProps {
   setIsAudio: (bool: boolean) => void;
   setIsTripped: (bool: boolean) => void;
   isPlaying: boolean;
-  isOffline: boolean;
 }
 
 export interface DashboardProps {

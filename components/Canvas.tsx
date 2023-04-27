@@ -4,6 +4,7 @@ import { CanvasProps } from "../datatypes/proptypes";
 
 import styles from "./Video.module.css";
 
+
 const Canvas = ({
   videoRef,
   setIsMotion,
@@ -20,8 +21,9 @@ const Canvas = ({
 
   const createAudioAnalyserCtx = useCallback((video: HTMLVideoElement) => {
     if (!audioContextRef.current) {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
       audioContextRef.current = new AudioContext();
-      // audioContextRef.current.resume();
+
       // Create a separate audio element for audio analysis
       audioElementRef.current = new Audio();
       audioElementRef.current.crossOrigin = "anonymous";

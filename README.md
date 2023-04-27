@@ -1,6 +1,6 @@
 # Surveillance Camera Management System (Simulation)
 
-- a web application for managing a simulated network of surveillance cameras
+- [a web application]("https://surveillance-camera-management-system.vercel.app/") for managing a simulated network of surveillance cameras
 in a building or facility.
 
 ## Features

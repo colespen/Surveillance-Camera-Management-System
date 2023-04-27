@@ -6,12 +6,12 @@ const Video = ({
   isMotion,
   isAudio,
   url,
-  isOffline,
 }) => {
   return (
     <>
       <video
         className={styles.videoElement}
+        data-testid="video"
         crossOrigin="anonymous"
         ref={videoRef}
         // width="553px"

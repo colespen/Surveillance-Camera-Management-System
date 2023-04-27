@@ -11,10 +11,9 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
   const [isMotion, setIsMotion] = useState<boolean>(false);
   const [isAudio, setIsAudio] = useState<boolean>(false);
   const [isOffline, setIsOffline] = useState<boolean>(false);
-  // const [isTripped, setIsTripped] = useState<boolean>(false);
+  // const [isCamTripped, setCamIsTripped] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // const [url, setUrl] = useState(selectedVideo.url);
   const selectedVideo = videos[selectedVideoIndex];
   const url = selectedVideo.url;
   const camera = selectedVideo.camera;
@@ -76,7 +75,6 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
           isMotion={isMotion}
           isAudio={isAudio}
           url={url}
-          isOffline={isOffline}
         />
         {
           <Canvas
@@ -85,8 +83,6 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
             setIsAudio={handleSetIsAudio}
             setIsTripped={handleSetIsTripped}
             isPlaying={isPlaying}
-            isOffline={isOffline}
-            // id={video.id}
           />
         }
         <div className={styles.alerts}>

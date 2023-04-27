@@ -27,6 +27,8 @@ npm run dev
 yarn dev
 # or
 pnpm dev
+# and
+npm run test
 ```
 
 Set the environment variables as specified in .env.example

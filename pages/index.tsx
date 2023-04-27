@@ -18,27 +18,27 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 
 const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   const [isTripped, setIsTripped] = useState<boolean>(false);
-  // const { push } = useRouter();
+  const { push } = useRouter();
   // session: Session / undefined / null
-  // const { status, data: session } = useSession({
-  //   required: true,
-  //   onUnauthenticated: () => {
-  //     push("/api/auth/signin");
-  //   },
-  // });
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      push("/api/auth/signin");
+    },
+  });
 
-  // if (status === "loading") {
-  //   return <h1>Loading...</h1>;
-  // }
+  if (status === "loading") {
+    return <h1>Loading...</h1>;
+  }
 
-  // if (!session) {
-  //   return (
-  //     <>
-  //       <h1>Restricted Access</h1>
-  //       <div>You need to be authenticated to view this page.</div>
-  //     </>
-  //   );
-  // }
+  if (!session) {
+    return (
+      <>
+        <h1>Restricted Access</h1>
+        <div>You need to be authenticated to view this page.</div>
+      </>
+    );
+  }
 
   const handleSetIsTripped = (bool: boolean) => {
     setIsTripped(bool);

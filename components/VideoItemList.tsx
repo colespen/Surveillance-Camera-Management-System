@@ -3,7 +3,7 @@ import VideoItem from "./VideoItem";
 
 import styles from "./Video.module.css";
 
-const VideoItemList = ({ source }: VideoItemListProps) => {
+const VideoItemList = ({ source, setIsTripped }: VideoItemListProps) => {
   const videosById = {};
 
   source.forEach((video) => {
@@ -16,9 +16,17 @@ const VideoItemList = ({ source }: VideoItemListProps) => {
 
   return (
     <div className={styles.videosContainer}>
-      {Object.entries(videosById).map(([id, videos]: [any, VideoData[]]) => (
-        <VideoItem key={id} id={id} videos={videos} />
-      ))}
+      {Object.entries(videosById).map(
+        ([id, videos]: [any, VideoData[]], index) => (
+          <VideoItem
+            key={id}
+            id={id}
+            videos={videos}
+            camNum={index}
+            setIsTripped={setIsTripped}
+          />
+        )
+      )}
     </div>
   );
 };

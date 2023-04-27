@@ -33,7 +33,7 @@ export const videoData: VideoData[] = [
     camera_id: 3,
     camera: "rear entrance overhead",
     url: "",
-    createdAt: '',
+    createdAt: '2023-04-20 11:08:06',
   },
   {
     camera_id: 3,

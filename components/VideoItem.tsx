@@ -5,13 +5,13 @@ import Video from "./Video";
 
 import styles from "./Video.module.css";
 
-const VideoItem = ({ id, videos }: VideoItemProps) => {
+const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
   const [isAudio, setIsAudio] = useState<boolean>(false);
   const [isOffline, setIsOffline] = useState<boolean>(false);
-  const [isTripped, setIsTripped] = useState<boolean>(false);
+  // const [isTripped, setIsTripped] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // const [url, setUrl] = useState(selectedVideo.url);
@@ -50,7 +50,7 @@ const VideoItem = ({ id, videos }: VideoItemProps) => {
   return (
     <>
       <div className={styles.videoHeader}>
-        <h3 className={styles.cameraHeader}>{camera}</h3>
+        <h3 className={styles.cameraHeader}>{camNum+1}{". "}{camera}</h3>
 
         <select
           className={styles.videoSelect}
@@ -59,7 +59,7 @@ const VideoItem = ({ id, videos }: VideoItemProps) => {
         >
           {videos.map((video, index) => (
             <option key={video.camera_id + index} value={index}>
-              {isOffline ? "offline" : video.createdAt}
+              {video.createdAt}
             </option>
           ))}
         </select>

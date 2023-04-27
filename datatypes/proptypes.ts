@@ -12,9 +12,12 @@ export interface DashboardProps {
 
 export interface VideoItemListProps {
   source: VideoData[];
+  setIsTripped: (bool: boolean) => void;
 }
 
 export interface VideoItemProps {
   id: number;
   videos: VideoData[];
+  camNum: number;
+  setIsTripped: (bool: boolean) => void;
 }

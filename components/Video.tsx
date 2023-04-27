@@ -1,13 +1,17 @@
+import styles from "./Video.module.css";
+
 const Video = ({ videoRef, handleIsPlaying, isMotion, isAudio, url }) => {
 
   return (
     <>
       <video
-        className="video-element"
+        className={styles.videoElement}
         crossOrigin="anonymous"
         ref={videoRef}
-        width="553px"
-        height="315px"
+        // width="50%"
+        // height="auto"
+        // width="553px"
+        // height="315px"
         controls
         autoPlay
         loop

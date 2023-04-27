@@ -1,0 +1,15 @@
+.headerMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.mainIndicator {
+  margin-left: 17px;
+}

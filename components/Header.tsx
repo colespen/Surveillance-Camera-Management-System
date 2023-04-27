@@ -8,7 +8,7 @@ const Header: React.FC = () => {
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
-  const {data: session, status} = useSession();
+  const { data: session, status } = useSession();
 
   let left = (
     <div className="left">
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
 
   let right = null;
 
-  if (status === 'loading') {
+  if (status === "loading") {
     left = (
       <div className="left">
         <Link href="/" legacyBehavior>
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
         <style jsx>{`
           a {
             text-decoration: none;
-            color: #000;
+            color: #d6cdcb;
             display: inline-block;
           }
 
@@ -104,7 +104,8 @@ const Header: React.FC = () => {
           }
 
           .right a {
-            border: 1px solid black;
+            color: #d6cdcb;
+            border: 1px solid #675a59;
             padding: 0.5rem 1rem;
             border-radius: 3px;
           }
@@ -118,11 +119,11 @@ const Header: React.FC = () => {
       <div className="left">
         <Link href="/" legacyBehavior>
           <a className="bold" data-active={isActive("/")}>
-            Feed
+            Live Feed
           </a>
         </Link>
         {/* <Link href="/" legacyBehavior> */}
-          <a >History</a>
+        <a>Historical Analysis</a>
         {/* </Link> */}
         <style jsx>{`
           .bold {
@@ -131,7 +132,7 @@ const Header: React.FC = () => {
 
           a {
             text-decoration: none;
-            color: #000;
+            color: #6d6c6c;
             display: inline-block;
           }
 
@@ -161,7 +162,7 @@ const Header: React.FC = () => {
         <style jsx>{`
           a {
             text-decoration: none;
-            color: #000;
+            color: #d6cdcb;
             display: inline-block;
           }
 
@@ -180,13 +181,15 @@ const Header: React.FC = () => {
           }
 
           .right a {
-            border: 1px solid black;
+            color: #d6cdcb;
+            border: 1px solid #675a59;
             padding: 0.5rem 1rem;
             border-radius: 3px;
           }
 
           button {
             border: none;
+            background-color: #232323;
           }
         `}</style>
       </div>

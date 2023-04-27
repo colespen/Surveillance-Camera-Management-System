@@ -85,19 +85,19 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
         />}
         <div className={styles.alerts}>
           <img
-            className="alert-ico"
+            className={styles.alertIcon}
             src="./audio-alert.png"
             alt="audio alert"
             style={{ visibility: isAudio ? "visible" : "hidden" }}
           />
           <img
-            className="alert-ico"
+            className={styles.alertIcon}
             src="./motion-alert.png"
             alt="audio alert"
             style={{ visibility: isMotion ? "visible" : "hidden" }}
           />
           <img
-            className="alert-ico"
+            className={styles.alertIcon}
             src="./offline-alert.png"
             alt="offline alert"
             style={{ visibility: isOffline ? "visible" : "hidden" }}

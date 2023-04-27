@@ -1,4 +1,6 @@
 import { VideoItemListProps } from "../datatypes/proptypes";
+import { VideoData } from "../datatypes/datatypes";
+
 import VideoItem from "./VideoItem";
 
 import styles from "./Video.module.css";

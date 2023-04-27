@@ -1,3 +1,5 @@
+import { VideoData } from "../datatypes/datatypes";
+
 export const videoData: VideoData[] = [
   {
     camera_id: 1,

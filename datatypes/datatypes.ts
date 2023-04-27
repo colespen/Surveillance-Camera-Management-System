@@ -1,4 +1,4 @@
-type VideoData = {
+export type VideoData = {
   camera_id: number;
   camera: string;
   url: string;

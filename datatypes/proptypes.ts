@@ -1,3 +1,5 @@
+import { VideoData } from "./datatypes";
+
 export interface CanvasProps {
   videoRef: React.MutableRefObject<HTMLVideoElement>;
   setIsMotion: (bool: boolean) => void;

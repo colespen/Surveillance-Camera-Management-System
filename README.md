@@ -60,5 +60,5 @@ Using this application to control a network of cameras, you will never miss any 
 ### Screenshots
 
 ![1](/docs/SMS_1.png?raw=true "1")
-![1](/docs/SMS_2.png?raw=true "2")
-![1](/docs/SMS_3.png?raw=true "3")
+![2](/docs/SMS_2.png?raw=true "2")
+![3](/docs/SMS_3.png?raw=true "3")

@@ -1,6 +1,80 @@
-/** 
-* @description: analysePixelDiff function compares two frames and return number of different pixels between each 
-*/
+/**
+ * @description: function that creates a new audio context
+ */
+const createAudioAnalyserCtx = (
+  video: HTMLVideoElement,
+  audioElementRef: React.MutableRefObject<HTMLAudioElement>,
+  audioContextRef: React.MutableRefObject<AudioContext>,
+  analyserNodeRef: React.MutableRefObject<AnalyserNode>
+) => {
+  if (!audioContextRef.current) {
+    const AudioContext =
+      window.AudioContext || (window as any).webkitAudioContext;
+    audioContextRef.current = new AudioContext();
+
+    // Create a separate audio element for audio analysis
+    audioElementRef.current = new Audio();
+    audioElementRef.current.crossOrigin = "anonymous";
+    audioElementRef.current = video;
+
+    const source = audioContextRef.current.createMediaElementSource(
+      audioElementRef.current
+    );
+    analyserNodeRef.current = audioContextRef.current.createAnalyser();
+    analyserNodeRef.current.fftSize = 512;
+    analyserNodeRef.current.minDecibels = -90;
+    analyserNodeRef.current.maxDecibels = -10;
+    analyserNodeRef.current.smoothingTimeConstant = 0.85;
+
+    source.connect(analyserNodeRef.current);
+    analyserNodeRef.current.connect(audioContextRef.current.destination);
+  }
+};
+
+/**
+ * @description: function that finds average audio decibel level and and sets alert according to threshold
+ */
+const analyzeAudio = (
+  isPlaying: boolean,
+  audioContextRef: React.MutableRefObject<AudioContext | null>,
+  analyserNodeRef: React.MutableRefObject<AnalyserNode>,
+  isAudioSetRef: React.MutableRefObject<boolean>,
+  setIsAudio: (bool: boolean) => void,
+  setIsTripped: (bool: boolean) => void
+) => {
+  // if (!isPlaying) {
+  //   return () => clearTimeout(analyzeDelay);
+  // }
+  audioContextRef.current.resume();
+
+  const bufferLength = analyserNodeRef.current.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  analyserNodeRef.current.getByteFrequencyData(dataArray);
+  const average =
+    dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
+
+  // Set audio flag based on the decibel value
+  if (average > 9) {
+    // do not set to true repeatedly if already true
+    if (!isAudioSetRef.current) {
+      setIsAudio(true);
+      setIsTripped(true);
+      isAudioSetRef.current = true;
+    }
+  } else {
+    if (isAudioSetRef.current) {
+      setIsAudio(false);
+      isAudioSetRef.current = false;
+    }
+  }
+  // Check audio flag every 100ms
+  // const analyzeDelay = setTimeout(analyzeAudio, 200);
+  // return () => clearTimeout(analyzeDelay);
+};
+
+/**
+ * @description: function that compares two frames and return number of different pixels between each
+ */
 const analysePixelDiff = (
   currentFrame: ImageData,
   previousFrame: ImageData,
@@ -27,4 +101,4 @@ const analysePixelDiff = (
   return diffPixelsCount;
 };
 
-export { analysePixelDiff };
+export { analysePixelDiff, createAudioAnalyserCtx, analyzeAudio };

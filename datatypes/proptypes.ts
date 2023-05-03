@@ -23,3 +23,11 @@ export interface VideoItemProps {
   camNum: number;
   setIsTripped: (bool: boolean) => void;
 }
+
+export interface VideoProps extends CanvasProps {
+  videoRef: React.MutableRefObject<HTMLVideoElement>;
+  isMotion: boolean;
+  isAudio: boolean;
+  setIsPlaying: (bool: boolean) => void;
+  url: string;
+}

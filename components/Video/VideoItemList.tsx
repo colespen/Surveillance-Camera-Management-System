@@ -1,11 +1,11 @@
-import { VideoItemListProps } from "../datatypes/proptypes";
-import { VideoData } from "../datatypes/datatypes";
+import { VideoItemListProps } from "../../datatypes/proptypes";
+import { VideoData } from "../../datatypes/datatypes";
 
 import VideoItem from "./VideoItem";
 
 import styles from "./Video.module.css";
 
-const VideoItemList = ({ source, setIsTripped }: VideoItemListProps) => {
+const VideoItemList: React.FC<VideoItemListProps> = ({ source, setIsTripped }) => {
   const videosById = {};
 
   source.forEach((video) => {

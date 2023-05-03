@@ -6,7 +6,7 @@ import { DashboardProps } from "../datatypes/proptypes";
 import { videoData } from "../mock-data/videoData";
 
 import Layout from "../components/Layout";
-import VideoItemList from "../components/VideoItemList";
+import VideoItemList from "../components/Video/VideoItemList";
 
 import styles from "./index.module.css";
 
@@ -40,6 +40,7 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
     );
   }
 
+  // useCallback?
   const handleSetIsTripped = (bool: boolean) => {
     setIsTripped(bool);
   };

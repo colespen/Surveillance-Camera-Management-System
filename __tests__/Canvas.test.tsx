@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { render } from "@testing-library/react";
-import Canvas from "../components/Canvas";
+import Canvas from "../components/Video/Canvas";
 
 // mock AudioContext
 jest.mock("node:globalThis", () => {

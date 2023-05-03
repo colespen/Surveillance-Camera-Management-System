@@ -1,8 +1,9 @@
+import { VideoProps } from "../../datatypes/proptypes";
 import styles from "./Video.module.css";
 
-const Video = ({
+const Video: React.FC<VideoProps> = ({
   videoRef,
-  handleIsPlaying,
+  setIsPlaying,
   isMotion,
   isAudio,
   url,
@@ -20,12 +21,12 @@ const Video = ({
         controls
         loop
         poster={"./video-placeholder.png"}
-        onPlay={() => handleIsPlaying(true)}
-        onPause={() => handleIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         // onEnded={() => handleIsPlaying(false)}
         // onEnded keeps state false on loop
-        onSeeking={() => handleIsPlaying(true)}
-        onSeeked={() => handleIsPlaying(false)}
+        // onSeeking={() => handleIsPlaying(true)}
+        // onSeeked={() => handleIsPlaying(false)}
         style={{
           border:
             `5px solid ` + (isMotion || isAudio ? "#ff0059" : "transparent"),

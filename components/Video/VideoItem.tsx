@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { VideoItemProps } from "../datatypes/proptypes";
+import { VideoItemProps } from "../../datatypes/proptypes";
 import Canvas from "./Canvas";
 import Video from "./Video";
 
 import styles from "./Video.module.css";
 
-const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
+const VideoItem: React.FC<VideoItemProps> = ({ id, videos, camNum, setIsTripped }) => {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
     setIsTripped(bool);
   };
 
-  const handleSelectVideo = (event) => {
+  const handleSelectVideo = (event: any) => {
     setSelectedVideoIndex(event.target.value);
   };
 
@@ -71,7 +71,7 @@ const VideoItem = ({ id, videos, camNum, setIsTripped }: VideoItemProps) => {
         <Video
           key={id}
           videoRef={videoRef}
-          handleIsPlaying={handleIsPlaying}
+          setIsPlaying={handleIsPlaying}
           isMotion={isMotion}
           isAudio={isAudio}
           url={url}

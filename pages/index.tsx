@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+// import { useRouter } from "next/router";
+// import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
 import { videoData } from "../mock-data/videoData";
 
@@ -23,31 +23,31 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   const [isTripped, setIsTripped] = useState<boolean>(false);
   const [threshold, setThreshold] = useState<thresholdEnum>("med");
-  const { push } = useRouter();
-  // // session: Session / undefined / null
-  const { status, data: session } = useSession({
-    required: true,
-    onUnauthenticated: () => {
-      push("/api/auth/signin");
-    },
-  });
+  // const { push } = useRouter();
+  // // // session: Session / undefined / null
+  // const { status, data: session } = useSession({
+  //   required: true,
+  //   onUnauthenticated: () => {
+  //     push("/api/auth/signin");
+  //   },
+  // });
 
-  if (status === "loading") {
-    return (
-      <div className={styles.loading}>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
+  // if (status === "loading") {
+  //   return (
+  //     <div className={styles.loading}>
+  //       <h1>Loading...</h1>
+  //     </div>
+  //   );
+  // }
 
-  if (!session) {
-    return (
-      <div className={styles.loading}>
-        <h1>Restricted Access</h1>
-        <div>You need to be authenticated to view this page.</div>
-      </div>
-    );
-  }
+  // if (!session) {
+  //   return (
+  //     <div className={styles.loading}>
+  //       <h1>Restricted Access</h1>
+  //       <div>You need to be authenticated to view this page.</div>
+  //     </div>
+  //   );
+  // }
 
   const handleSetIsTripped = (bool: boolean) => {
     setIsTripped(bool);
@@ -56,8 +56,6 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   const handleThreshChange = (e) => {
     setThreshold(e.target.value);
   };
-
-  console.log("isTripped in index:", isTripped);
 
   return (
     <Layout>

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import Video from "../components/Video";
+import Video from "../components/Video/Video";
 
 describe("Video component", () => {
   test("video should play on clicking play button", () => {
@@ -12,7 +12,7 @@ describe("Video component", () => {
     render(
       <Video
         videoRef={videoRef}
-        handleIsPlaying={handleIsPlaying}
+        setIsPlaying={handleIsPlaying}
         isMotion={isMotion}
         isAudio={isAudio}
         url={url}
@@ -38,7 +38,7 @@ describe("Video component", () => {
     const { getByTestId } = render(
       <Video
         videoRef={videoRef}
-        handleIsPlaying={handleIsPlaying}
+        setIsPlaying={handleIsPlaying}
         isMotion={isMotion}
         isAudio={isAudio}
         url={url}
@@ -64,7 +64,7 @@ describe("Video component", () => {
     const { getByTestId } = render(
       <Video
         videoRef={videoRef}
-        handleIsPlaying={handleIsPlaying}
+        setIsPlaying={handleIsPlaying}
         isMotion={isMotion}
         isAudio={isAudio}
         url={url}

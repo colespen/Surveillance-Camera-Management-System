@@ -44,6 +44,11 @@
   scale: 75%;
 }
 
+.camAlertIcon {
+  scale: 70%;
+  margin-right: 5px;
+}
+
 .videoSelect {
   font-size: 15px;
   margin-left: 15px;

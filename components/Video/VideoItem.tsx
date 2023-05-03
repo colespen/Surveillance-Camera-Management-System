@@ -5,13 +5,18 @@ import Video from "./Video";
 
 import styles from "./Video.module.css";
 
-const VideoItem: React.FC<VideoItemProps> = ({ id, videos, camNum, setIsTripped }) => {
+const VideoItem: React.FC<VideoItemProps> = ({
+  id,
+  videos,
+  camNum,
+  setIsTripped,
+}) => {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
   const [isAudio, setIsAudio] = useState<boolean>(false);
   const [isOffline, setIsOffline] = useState<boolean>(false);
-  // const [isCamTripped, setCamIsTripped] = useState<boolean>(false);
+  const [isCamTripped, setCamIsTripped] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const selectedVideo = videos[selectedVideoIndex];
@@ -38,8 +43,12 @@ const VideoItem: React.FC<VideoItemProps> = ({ id, videos, camNum, setIsTripped 
   const handleSetIsAudio = (bool: boolean) => {
     setIsAudio(bool);
   };
+  // const handleSetCamIsTripped = (bool: boolean) => {
+  //   setCamIsTripped(bool);
+  // };
   const handleSetIsTripped = (bool: boolean) => {
     setIsTripped(bool);
+    setCamIsTripped(bool);
   };
 
   const handleSelectVideo = (event: any) => {
@@ -49,6 +58,14 @@ const VideoItem: React.FC<VideoItemProps> = ({ id, videos, camNum, setIsTripped 
   return (
     <>
       <div className={styles.videoHeader}>
+        <img
+          className={styles.camAlertIcon}
+          src={
+            (isOffline ? "./grey" : isCamTripped ? "./red" : "./green") +
+            "-circle.png"
+          }
+          alt="cam alert indicator"
+        />
         <h3 className={styles.cameraHeader}>
           {camNum + 1}
           {". "}

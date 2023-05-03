@@ -28,15 +28,19 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   });
 
   if (status === "loading") {
-    return <h1>Loading...</h1>;
+    return (
+      <div className={styles.loading}>
+        <h1>Loading...</h1>
+      </div>
+    );
   }
 
   if (!session) {
     return (
-      <>
+      <div className={styles.loading}>
         <h1>Restricted Access</h1>
         <div>You need to be authenticated to view this page.</div>
-      </>
+      </div>
     );
   }
 
@@ -48,7 +52,7 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   return (
     <Layout>
       <div className={styles.headerMain}>
-        <div className={styles.headerInner}>
+        <div className={styles.titleMain}>
           <h1>Surveillance Management System</h1>
           <img
             className={styles.mainIndicator}
@@ -56,7 +60,10 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
             alt="cam indicator1"
           ></img>
         </div>
+
+        <div className={styles.camIndicators}></div>
       </div>
+
       <VideoItemList source={source} setIsTripped={handleSetIsTripped} />
     </Layout>
   );

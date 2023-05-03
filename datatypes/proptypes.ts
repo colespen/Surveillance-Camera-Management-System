@@ -24,7 +24,7 @@ export interface VideoItemProps {
   setIsTripped: (bool: boolean) => void;
 }
 
-export interface VideoProps extends CanvasProps {
+export interface VideoProps {
   videoRef: React.MutableRefObject<HTMLVideoElement>;
   isMotion: boolean;
   isAudio: boolean;

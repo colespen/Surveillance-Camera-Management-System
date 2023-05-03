@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GetStaticProps } from "next";
-import { DashboardProps } from "../datatypes/proptypes";
 import { videoData } from "../mock-data/videoData";
+
+import { DashboardProps } from "../datatypes/proptypes";
+import { thresholdEnum } from "../datatypes/datatypes";
 
 import Layout from "../components/Layout";
 import VideoItemList from "../components/Video/VideoItemList";
 
 import styles from "./index.module.css";
+import ThresholdSettings from "../components/ThresholdSettings";
+import Title from "../components/Title";
 
 export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
   return {
@@ -18,6 +22,7 @@ export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
 
 const Dashboard: React.FC<DashboardProps> = ({ source }) => {
   const [isTripped, setIsTripped] = useState<boolean>(false);
+  const [threshold, setThreshold] = useState<thresholdEnum>("med");
   const { push } = useRouter();
   // // session: Session / undefined / null
   const { status, data: session } = useSession({
@@ -44,27 +49,30 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
     );
   }
 
-  // useCallback?
   const handleSetIsTripped = (bool: boolean) => {
     setIsTripped(bool);
   };
 
+  const handleThreshChange = (e) => {
+    setThreshold(e.target.value);
+  };
+
+  console.log("isTripped in index:", isTripped);
+
   return (
     <Layout>
       <div className={styles.headerMain}>
-        <div className={styles.titleMain}>
-          <h1>Surveillance Management System</h1>
-          <img
-            className={styles.mainIndicator}
-            src={"./" + (isTripped ? "red" : "green") + "-circle.png"}
-            alt="cam indicator1"
-          ></img>
-        </div>
-
-        <div className={styles.camIndicators}></div>
+        <Title isTripped={isTripped} />
+        <ThresholdSettings
+          handleThreshChange={handleThreshChange}
+          threshold={threshold}
+        />
       </div>
-
-      <VideoItemList source={source} setIsTripped={handleSetIsTripped} />
+      <VideoItemList
+        source={source}
+        setIsTripped={handleSetIsTripped}
+        threshold={threshold}
+      />
     </Layout>
   );
 };

@@ -5,7 +5,7 @@ import VideoItem from "./VideoItem";
 
 import styles from "./Video.module.css";
 
-const VideoItemList: React.FC<VideoItemListProps> = ({ source, setIsTripped }) => {
+const VideoItemList: React.FC<VideoItemListProps> = ({ source, setIsTripped, threshold }) => {
   const videosById = {};
 
   source.forEach((video) => {
@@ -26,6 +26,7 @@ const VideoItemList: React.FC<VideoItemListProps> = ({ source, setIsTripped }) =
             videos={videos}
             camNum={index}
             setIsTripped={setIsTripped}
+            threshold={threshold}
           />
         )
       )}

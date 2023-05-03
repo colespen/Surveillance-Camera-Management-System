@@ -154,7 +154,7 @@ const Navigator: React.FC = () => {
         <p>
           {session.user.name} ({session.user.email})
         </p>
-        <Link href="/settings" legacyBehavior>
+        <Link href="/" legacyBehavior>
           <button>
             <a>Settings</a>
           </button>

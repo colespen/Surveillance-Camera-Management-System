@@ -4,3 +4,5 @@ export type VideoData = {
   url: string;
   createdAt: string;
 };
+
+export type thresholdEnum = "low" | "med" | "high"

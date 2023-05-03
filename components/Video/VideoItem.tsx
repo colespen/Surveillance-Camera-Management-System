@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { VideoItemProps } from "../../datatypes/proptypes";
 import Canvas from "./Canvas";
 import Video from "./Video";
+import AlertDisplay from "./AlertDisplay";
 
 import styles from "./Video.module.css";
 
@@ -10,6 +11,7 @@ const VideoItem: React.FC<VideoItemProps> = ({
   videos,
   camNum,
   setIsTripped,
+  threshold
 }) => {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -43,9 +45,6 @@ const VideoItem: React.FC<VideoItemProps> = ({
   const handleSetIsAudio = (bool: boolean) => {
     setIsAudio(bool);
   };
-  // const handleSetCamIsTripped = (bool: boolean) => {
-  //   setCamIsTripped(bool);
-  // };
   const handleSetIsTripped = (bool: boolean) => {
     setIsTripped(bool);
     setCamIsTripped(bool);
@@ -100,28 +99,14 @@ const VideoItem: React.FC<VideoItemProps> = ({
             setIsAudio={handleSetIsAudio}
             setIsTripped={handleSetIsTripped}
             isPlaying={isPlaying}
+            pixelDiffThreshold={threshold}
           />
         }
-        <div className={styles.alerts}>
-          <img
-            className={styles.alertIcon}
-            src="./audio-alert.png"
-            alt="audio alert"
-            style={{ visibility: isAudio ? "visible" : "hidden" }}
-          />
-          <img
-            className={styles.alertIcon}
-            src="./motion-alert.png"
-            alt="audio alert"
-            style={{ visibility: isMotion ? "visible" : "hidden" }}
-          />
-          <img
-            className={styles.alertIcon}
-            src="./offline-alert.png"
-            alt="offline alert"
-            style={{ visibility: isOffline ? "visible" : "hidden" }}
-          />
-        </div>
+        <AlertDisplay
+          isAudio={isAudio}
+          isMotion={isMotion}
+          isOffline={isOffline}
+        />
       </div>
     </>
   );

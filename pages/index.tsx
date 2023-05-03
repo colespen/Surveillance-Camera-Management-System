@@ -57,8 +57,6 @@ const Dashboard: React.FC<DashboardProps> = ({ source }) => {
     setThreshold(e.target.value);
   };
 
-  console.log("isTripped in index:", isTripped);
-
   return (
     <Layout>
       <div className={styles.headerMain}>

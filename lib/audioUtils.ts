@@ -11,7 +11,6 @@ const createAudioAnalyserCtx = (
     const AudioContext =
       window.AudioContext || (window as any).webkitAudioContext;
     audioContextRef.current = new AudioContext();
-    
 
     // Create a separate audio element for audio analysis
     audioElementRef.current = new Audio();
@@ -60,8 +59,11 @@ const analyzeAudio = (
     }
   } else {
     if (isAudioSetRef.current) {
-      setIsAudio(false);
-      isAudioSetRef.current = false;
+      const setFalseDelay = setTimeout(() => {
+        setIsAudio(false);
+        isAudioSetRef.current = false;
+      }, 750);
+      return () => clearTimeout(setFalseDelay);
     }
   }
 };

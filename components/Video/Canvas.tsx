@@ -36,10 +36,13 @@ const Canvas: React.FC<CanvasProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const video = videoRef.current;
     if (!video) return;
+
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
+
     let diffThresh = 0;
     if (pixelDiffThreshold === "high") {
       diffThresh = 175;

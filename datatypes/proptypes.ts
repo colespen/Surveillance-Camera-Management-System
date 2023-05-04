@@ -23,6 +23,15 @@ export interface VideoItemHeaderProps {
   selectedVideoIndex: number;
   handleSelectVideo: (event: any) => void;
 }
+
+export interface VideoContainerProps {
+  videoRef: React.MutableRefObject<HTMLVideoElement>;
+  url: string;
+  setIsTripped: (bool: boolean) => void;
+  threshold: thresholdEnum;
+  isOffline: boolean;
+}
+
 export interface VideoItemListProps {
   source: VideoData[];
   setIsTripped: (bool: boolean) => void;

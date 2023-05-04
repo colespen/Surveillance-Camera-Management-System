@@ -5,13 +5,13 @@ import Video from "./Video";
 import AlertDisplay from "./AlertDisplay";
 
 import styles from "./Video.module.css";
+import VideoItemHeader from "./VideoItemHeader";
 
 const VideoItem: React.FC<VideoItemProps> = ({
-  id,
   videos,
   camNum,
   setIsTripped,
-  threshold
+  threshold,
 }) => {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -23,7 +23,6 @@ const VideoItem: React.FC<VideoItemProps> = ({
 
   const selectedVideo = videos[selectedVideoIndex];
   const url = selectedVideo.url;
-  const camera = selectedVideo.camera;
 
   useEffect(() => {
     if (videoRef.current) {
@@ -56,52 +55,32 @@ const VideoItem: React.FC<VideoItemProps> = ({
 
   return (
     <>
-      <div className={styles.videoHeader}>
-        <img
-          className={styles.camAlertIcon}
-          src={
-            (isOffline ? "./grey" : isCamTripped ? "./red" : "./green") +
-            "-circle.png"
-          }
-          alt="cam alert indicator"
-        />
-        <h3 className={styles.cameraHeader}>
-          {camNum + 1}
-          {". "}
-          {camera}
-        </h3>
-
-        <select
-          className={styles.videoSelect}
-          value={selectedVideoIndex}
-          onChange={handleSelectVideo}
-        >
-          {videos.map((video, index) => (
-            <option key={video.camera_id + index} value={index}>
-              {video.createdAt}
-            </option>
-          ))}
-        </select>
-      </div>
+      <VideoItemHeader
+        videos={videos}
+        isOffline={isOffline}
+        isCamTripped={isCamTripped}
+        camNum={camNum}
+        selectedVideoIndex={selectedVideoIndex}
+        handleSelectVideo={handleSelectVideo}
+      />
       <div className={styles.videoContainer}>
         <Video
-          key={id}
           videoRef={videoRef}
           setIsPlaying={handleIsPlaying}
           isMotion={isMotion}
           isAudio={isAudio}
           url={url}
         />
-        {
-          <Canvas
-            videoRef={videoRef}
-            setIsMotion={handleSetIsMotion}
-            setIsAudio={handleSetIsAudio}
-            setIsTripped={handleSetIsTripped}
-            isPlaying={isPlaying}
-            pixelDiffThreshold={threshold}
-          />
-        }
+        <Canvas
+          videoRef={videoRef}
+          setIsMotion={handleSetIsMotion}
+          setIsAudio={handleSetIsAudio}
+          setIsTripped={handleSetIsTripped}
+          isPlaying={isPlaying}
+          pixelDiffThreshold={threshold}
+          isOffline={isOffline}
+          url={url}
+        />
         <AlertDisplay
           isAudio={isAudio}
           isMotion={isMotion}

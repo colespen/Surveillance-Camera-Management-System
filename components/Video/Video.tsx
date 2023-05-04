@@ -19,14 +19,11 @@ const Video: React.FC<VideoProps> = ({
         // height="315px"
         autoPlay
         controls
-        loop
         poster={"./video-placeholder.png"}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        // onEnded={() => handleIsPlaying(false)}
-        // onEnded keeps state false on loop
-        // onSeeking={() => handleIsPlaying(true)}
-        // onSeeked={() => handleIsPlaying(false)}
+        // manually loop to prevent canvas draw diff
+        onEnded={() => videoRef.current.play()}
         style={{
           border:
             `5px solid ` + (isMotion || isAudio ? "#ff0059" : "transparent"),

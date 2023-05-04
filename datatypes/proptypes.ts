@@ -7,12 +7,22 @@ export interface CanvasProps {
   setIsTripped: (bool: boolean) => void;
   isPlaying: boolean;
   pixelDiffThreshold: thresholdEnum;
+  isOffline: boolean;
+  url: string;
 }
 
 export interface DashboardProps {
   source: VideoData[];
 }
 
+export interface VideoItemHeaderProps {
+  videos: VideoData[];
+  isOffline: boolean;
+  isCamTripped: boolean;
+  camNum: number;
+  selectedVideoIndex: number;
+  handleSelectVideo: (event: any) => void;
+}
 export interface VideoItemListProps {
   source: VideoData[];
   setIsTripped: (bool: boolean) => void;
@@ -20,7 +30,6 @@ export interface VideoItemListProps {
 }
 
 export interface VideoItemProps {
-  id: number;
   videos: VideoData[];
   camNum: number;
   setIsTripped: (bool: boolean) => void;

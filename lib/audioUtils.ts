@@ -36,10 +36,7 @@ const createAudioAnalyserCtx = (
  */
 const analyzeAudio = (
   audioContextRef: React.MutableRefObject<AudioContext | null>,
-  audioAnalyserNodeRef: React.MutableRefObject<AnalyserNode>,
-  isAudioSetRef: React.MutableRefObject<boolean>,
-  setIsAudio: (bool: boolean) => void,
-  setIsTripped: (bool: boolean) => void
+  audioAnalyserNodeRef: React.MutableRefObject<AnalyserNode>
 ) => {
   audioContextRef.current.resume();
 
@@ -48,24 +45,7 @@ const analyzeAudio = (
   audioAnalyserNodeRef.current.getByteFrequencyData(dataArray);
   const average =
     dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
-
-  // Set audio flag based on the decibel value
-  if (average > 9) {
-    // do not set to true repeatedly if already true
-    if (!isAudioSetRef.current) {
-      setIsAudio(true);
-      setIsTripped(true);
-      isAudioSetRef.current = true;
-    }
-  } else {
-    if (isAudioSetRef.current) {
-      const setFalseDelay = setTimeout(() => {
-        setIsAudio(false);
-        isAudioSetRef.current = false;
-      }, 750);
-      return () => clearTimeout(setFalseDelay);
-    }
-  }
+  return average;
 };
 
 export { createAudioAnalyserCtx, analyzeAudio };

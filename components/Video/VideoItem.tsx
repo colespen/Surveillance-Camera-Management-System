@@ -17,6 +17,7 @@ const VideoItem: React.FC<VideoItemProps> = ({
 
   const selectedVideo = videos[selectedVideoIndex];
   const url = selectedVideo.url;
+  const cameraId= selectedVideo.camera_id
 
   useEffect(() => {
     if (videoRef.current) {
@@ -53,6 +54,7 @@ const VideoItem: React.FC<VideoItemProps> = ({
         threshold={threshold}
         isOffline={isOffline}
         url={url}
+        cameraId={cameraId}
       />
     </>
   );

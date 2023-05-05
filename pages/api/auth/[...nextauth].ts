@@ -10,7 +10,7 @@ const authHandler: NextApiHandler = (req, res) =>
   NextAuth(req, res, authOptions);
 export default authHandler;
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },

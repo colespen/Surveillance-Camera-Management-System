@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { createAudioAnalyserCtx, analyzeAudio } from "../../lib/audioUtils";
 import { analysePixelDiff } from "../../lib/drawUtils";
+import { createAlertThrottle } from "../../services/createAlert";
 import { CanvasProps } from "../../datatypes/proptypes";
-
 import styles from "./Video.module.css";
 
 const Canvas: React.FC<CanvasProps> = ({
@@ -11,9 +11,10 @@ const Canvas: React.FC<CanvasProps> = ({
   setIsAudio,
   setIsTripped,
   isPlaying,
-  pixelDiffThreshold,
+  threshold,
   isOffline,
   url,
+  cameraId,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isMotionSetRef = useRef<boolean>(false);
@@ -43,18 +44,18 @@ const Canvas: React.FC<CanvasProps> = ({
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    let diffThresh = 0;
-    if (pixelDiffThreshold === "high") {
-      diffThresh = 175;
-    } else if (pixelDiffThreshold === "low") {
-      diffThresh = 40;
+    let diffThreshSet = 0;
+    if (threshold === "high") {
+      diffThreshSet = 175;
+    } else if (threshold === "low") {
+      diffThreshSet = 40;
     } else {
-      diffThresh = 105;
+      diffThreshSet = 105;
     }
 
     const width = canvas.width;
     const height = canvas.height;
-    const threshold = 120;
+    const diffThresholdDraw = diffThreshSet + 10;
     let diff = 0;
     let diffPixelsCount = 0;
     let prevDiffPixelsCount = 0;
@@ -73,7 +74,7 @@ const Canvas: React.FC<CanvasProps> = ({
         diffPixelsCount = analysePixelDiff(
           currentFrame,
           previousFrame,
-          threshold,
+          diffThresholdDraw,
           diffPixelsCount
         );
 
@@ -81,11 +82,12 @@ const Canvas: React.FC<CanvasProps> = ({
         tempDiffPixelsCount = diffPixelsCount;
         prevDiffPixelsCount = diff;
 
-        if (prevDiffPixelsCount > diffThresh) {
+        if (prevDiffPixelsCount > diffThreshSet) {
           if (!isMotionSetRef.current) {
             setIsMotion(true);
             setIsTripped(true);
             isMotionSetRef.current = true;
+            createAlertThrottle(cameraId, "MOTION");
           }
         } else {
           if (isMotionSetRef.current) {
@@ -97,18 +99,27 @@ const Canvas: React.FC<CanvasProps> = ({
       previousFrame = currentFrame;
       ctx.putImageData(currentFrame, 0, 0);
 
-      analyzeAudio(
-        audioContextRef,
-        audioAnalyserNodeRef,
-        isAudioSetRef,
-        setIsAudio,
-        setIsTripped
-      );
-      // this will draw orig video frame again thus clearing green pixel data
-      // if (clearCanvas) ctx.drawImage(video, 0, 0, width, height);
+      const average = analyzeAudio(audioContextRef, audioAnalyserNodeRef);
+      // Set audio alert based on the decibel value
+      if (average > 9) {
+        // do not set to true repeatedly if already true
+        if (!isAudioSetRef.current) {
+          setIsAudio(true);
+          setIsTripped(true);
+          isAudioSetRef.current = true;
+        }
+      } else {
+        if (isAudioSetRef.current) {
+          const setFalseDelay = setTimeout(() => {
+            setIsAudio(false);
+            isAudioSetRef.current = false;
+          }, 750);
+          return () => clearTimeout(setFalseDelay);
+        }
+      }
     }, 90);
     return () => clearInterval(drawInterval);
-  }, [videoRef.current, isPlaying, pixelDiffThreshold, url]);
+  }, [videoRef.current, isPlaying, threshold, url]);
 
   return (
     <canvas

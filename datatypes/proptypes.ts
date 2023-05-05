@@ -6,9 +6,10 @@ export interface CanvasProps {
   setIsAudio: (bool: boolean) => void;
   setIsTripped: (bool: boolean) => void;
   isPlaying: boolean;
-  pixelDiffThreshold: thresholdEnum;
+  threshold: thresholdEnum;
   isOffline: boolean;
   url: string;
+  cameraId: number;
 }
 
 export interface DashboardProps {
@@ -30,6 +31,7 @@ export interface VideoContainerProps {
   setIsTripped: (bool: boolean) => void;
   threshold: thresholdEnum;
   isOffline: boolean;
+  cameraId: number;
 }
 
 export interface VideoItemListProps {

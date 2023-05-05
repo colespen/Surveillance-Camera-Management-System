@@ -4,7 +4,7 @@
 const analysePixelDiff = (
   currentFrame: ImageData,
   previousFrame: ImageData,
-  threshold: number,
+  diffThreshold: number,
   diffPixelsCount: number
 ) => {
   for (let i = 0; i < currentFrame.data.length; i += 8) {
@@ -17,7 +17,7 @@ const analysePixelDiff = (
     const b2 = currentFrame.data[i + 2];
     const pixelSum = Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
 
-    if (pixelSum > threshold) {
+    if (pixelSum > diffThreshold) {
       diffPixelsCount++;
       currentFrame.data[i] = 0;
       currentFrame.data[i + 1] = 255;

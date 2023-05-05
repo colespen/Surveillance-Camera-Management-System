@@ -7,13 +7,12 @@ import AlertDisplay from "./AlertDisplay";
 
 import styles from "./Video.module.css";
 
-const VideoContainer: React.FC<VideoContainerProps> = ({
-  videoRef,
-  url,
-  setIsTripped,
-  threshold,
-  isOffline,
-}) => {
+const VideoContainer: React.FC<VideoContainerProps> = (props) => {
+  const {
+    videoRef,
+    url,
+    isOffline,
+  } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
   const [isAudio, setIsAudio] = useState<boolean>(false);
@@ -40,14 +39,10 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
         isAudio={isAudio}
       />
       <Canvas
-        videoRef={videoRef}
+        {...props}
         setIsMotion={handleSetIsMotion}
         setIsAudio={handleSetIsAudio}
-        setIsTripped={setIsTripped}
         isPlaying={isPlaying}
-        pixelDiffThreshold={threshold}
-        isOffline={isOffline}
-        url={url}
       />
       <AlertDisplay
         isAudio={isAudio}

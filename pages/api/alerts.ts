@@ -1,7 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
 import prisma from "../../lib/prisma";
-
 import type { NextApiRequest, NextApiResponse } from "next";
 import { AlertType } from "@prisma/client";
 
@@ -9,7 +6,7 @@ interface AlertCreateInput {
   cameraId: number;
   type: AlertType;
 }
-
+// TODO: must be protected route
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.setHeader("Content-Type", "application/json");
 

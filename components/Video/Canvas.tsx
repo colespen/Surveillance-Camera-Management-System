@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { createAudioAnalyserCtx, analyzeAudio } from "../../lib/audioUtils";
 import { analysePixelDiff } from "../../lib/drawUtils";
 import { createAlertThrottle } from "../../services/createAlert";
@@ -34,13 +34,6 @@ const Canvas: React.FC<CanvasProps> = ({
     [cameraId]
   );
 
-  // const createAlert = useCallback(
-  //   (type: AlertType) => {
-  //     return createAlertThrottle(cameraId, type);
-  //   },
-  //   [cameraId]
-  // );
-
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -55,7 +48,6 @@ const Canvas: React.FC<CanvasProps> = ({
   // call /api/alerts create alert entry in db
   useEffect(() => {
     if (isAudio) {
-      // createAlert(AlertType.SOUND)
       createAlert.sound();
     }
     if (isMotion) {

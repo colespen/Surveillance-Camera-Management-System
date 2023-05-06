@@ -29,7 +29,7 @@ model Alert {
   cameraId Int       @map("camera_id")
   date     DateTime  @default(now())
   type     AlertType
-  camera   Camera?    @relation(fields: [cameraId], references: [id])
+  camera   Camera    @relation(fields: [cameraId], references: [id])
 
   @@map("alerts")
 }

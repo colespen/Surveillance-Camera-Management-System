@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           type,
         },
       });
-      console.log("alerted created: ", newAlert);
+      console.log("alert created: ", newAlert);
       res.status(200).json(newAlert)
       break;
   }

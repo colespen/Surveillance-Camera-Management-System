@@ -10,8 +10,7 @@ const createAlertThrottle = (cameraId: number, type: AlertType) => {
     });
   };
   const throttledAlert = throttle(createAlert, 5000);
-  throttledAlert();
-  // console.log("alertData in Canvas: ", alertData)
+  return throttledAlert;
 };
 
 export { createAlertThrottle };

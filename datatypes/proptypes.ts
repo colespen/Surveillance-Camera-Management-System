@@ -10,6 +10,8 @@ export interface CanvasProps {
   isOffline: boolean;
   url: string;
   cameraId: number;
+  isMotion: boolean;
+  isAudio: boolean;
 }
 
 export interface DashboardProps {

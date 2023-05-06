@@ -6,16 +6,19 @@
  * @return (Function)
  *
  */
-
 export const throttle = (callback: Function, delay: number) => {
-  let previousTime = 0;
+  let timer: NodeJS.Timeout;
 
-  return (...args: any) => {
-    const currentTime = new Date().getTime();
-
-    if (currentTime - previousTime > delay) {
-      previousTime = currentTime;
-      return callback(...args);
+  return (...args: unknown[]) => {
+    if (timer) {
+      console.log("clearTimeout(timer)");
+      clearTimeout(timer);
     }
+
+    timer = setTimeout(() => {
+      callback(...args);
+      console.log("callback() -- setTimeout");
+      timer = null;
+    }, delay);
   };
 };

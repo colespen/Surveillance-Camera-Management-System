@@ -12,6 +12,7 @@ const VideoContainer: React.FC<VideoContainerProps> = (props) => {
     videoRef,
     url,
     isOffline,
+    // cameraId
   } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMotion, setIsMotion] = useState<boolean>(false);
@@ -43,6 +44,8 @@ const VideoContainer: React.FC<VideoContainerProps> = (props) => {
         setIsMotion={handleSetIsMotion}
         setIsAudio={handleSetIsAudio}
         isPlaying={isPlaying}
+        isMotion={isMotion}
+        isAudio={isAudio}
       />
       <AlertDisplay
         isAudio={isAudio}

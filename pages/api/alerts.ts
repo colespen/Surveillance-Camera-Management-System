@@ -1,5 +1,5 @@
-// import { getServerSession } from "next-auth/react";
-// import { authOptions } from "./auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
 import prisma from "../../lib/prisma";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -11,10 +11,6 @@ interface AlertCreateInput {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // const session = await getServerSession({ req });
-  // if (session) {
-  // Signed in
-  // console.log("Session", JSON.stringify(session, null, 2));
   res.setHeader("Content-Type", "application/json");
 
   const { method } = req;
@@ -37,11 +33,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json(newAlert)
       break;
   }
-  // } else {
-  //   // Not Signed in
-  //   res.status(401).send("not authenticated");
-  // }
-  res.end();
 };
 
 export default handler;

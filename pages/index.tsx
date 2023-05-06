@@ -8,11 +8,11 @@ import { DashboardProps } from "../datatypes/proptypes";
 import { thresholdEnum } from "../datatypes/datatypes";
 
 import Layout from "../components/Layout";
+import Title from "../components/Title";
+import ThresholdSettings from "../components/ThresholdSettings";
 import VideoItemList from "../components/Video/VideoItemList";
 
 import styles from "./index.module.css";
-import ThresholdSettings from "../components/ThresholdSettings";
-import Title from "../components/Title";
 
 export const getStaticProps: GetStaticProps<DashboardProps> = async () => {
   return {

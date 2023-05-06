@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { createAudioAnalyserCtx, analyzeAudio } from "../../lib/audioUtils";
 import { analysePixelDiff } from "../../lib/drawUtils";
 import { createAlertThrottle } from "../../services/createAlert";
 import { CanvasProps } from "../../datatypes/proptypes";
 import styles from "./Video.module.css";
+import { AlertType } from "@prisma/client";
 
 const Canvas: React.FC<CanvasProps> = ({
   videoRef,
@@ -15,6 +16,8 @@ const Canvas: React.FC<CanvasProps> = ({
   isOffline,
   url,
   cameraId,
+  isMotion,
+  isAudio,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isMotionSetRef = useRef<boolean>(false);
@@ -22,6 +25,21 @@ const Canvas: React.FC<CanvasProps> = ({
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioAnalyserNodeRef = useRef<AnalyserNode | null>(null);
+
+  const createAlert = useMemo(
+    () => ({
+      sound: createAlertThrottle(cameraId, AlertType.SOUND),
+      motion: createAlertThrottle(cameraId, AlertType.MOTION),
+    }),
+    [cameraId]
+  );
+
+  // const createAlert = useCallback(
+  //   (type: AlertType) => {
+  //     return createAlertThrottle(cameraId, type);
+  //   },
+  //   [cameraId]
+  // );
 
   useEffect(() => {
     const video = videoRef.current;
@@ -33,6 +51,17 @@ const Canvas: React.FC<CanvasProps> = ({
       audioAnalyserNodeRef
     );
   }, []);
+
+  // call /api/alerts create alert entry in db
+  useEffect(() => {
+    if (isAudio) {
+      // createAlert(AlertType.SOUND)
+      createAlert.sound();
+    }
+    if (isMotion) {
+      createAlert.motion();
+    }
+  }, [isAudio, isMotion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,7 +84,7 @@ const Canvas: React.FC<CanvasProps> = ({
 
     const width = canvas.width;
     const height = canvas.height;
-    const diffThresholdDraw = diffThreshSet + 10;
+    const diffThresholdDraw = diffThreshSet + 15;
     let diff = 0;
     let diffPixelsCount = 0;
     let prevDiffPixelsCount = 0;
@@ -87,7 +116,7 @@ const Canvas: React.FC<CanvasProps> = ({
             setIsMotion(true);
             setIsTripped(true);
             isMotionSetRef.current = true;
-            createAlertThrottle(cameraId, "MOTION");
+            console.log("setIsMotion(true)");
           }
         } else {
           if (isMotionSetRef.current) {
@@ -107,6 +136,7 @@ const Canvas: React.FC<CanvasProps> = ({
           setIsAudio(true);
           setIsTripped(true);
           isAudioSetRef.current = true;
+          console.log("setIsAudio(true)");
         }
       } else {
         if (isAudioSetRef.current) {

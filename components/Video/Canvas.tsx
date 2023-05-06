@@ -108,7 +108,6 @@ const Canvas: React.FC<CanvasProps> = ({
             setIsMotion(true);
             setIsTripped(true);
             isMotionSetRef.current = true;
-            console.log("setIsMotion(true)");
           }
         } else {
           if (isMotionSetRef.current) {
@@ -128,7 +127,6 @@ const Canvas: React.FC<CanvasProps> = ({
           setIsAudio(true);
           setIsTripped(true);
           isAudioSetRef.current = true;
-          console.log("setIsAudio(true)");
         }
       } else {
         if (isAudioSetRef.current) {

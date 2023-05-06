@@ -11,13 +11,11 @@ export const throttle = (callback: Function, delay: number) => {
 
   return (...args: unknown[]) => {
     if (timer) {
-      console.log("clearTimeout(timer)");
       clearTimeout(timer);
     }
 
     timer = setTimeout(() => {
       callback(...args);
-      console.log("callback() -- setTimeout");
       timer = null;
     }, delay);
   };
